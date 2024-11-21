@@ -1,0 +1,11 @@
+
+<div class="alert-box">
+    <div *ngIf="alerts.length > 0" class="alert-overlay">
+        <div class="alert-modal" (click)="$event.stopPropagation()">
+          <div class="alert-content">
+            <p *ngFor="let alert of alerts">{{ alert }}</p>
+          </div>
+        </div>
+    </div>
+</div>
+  

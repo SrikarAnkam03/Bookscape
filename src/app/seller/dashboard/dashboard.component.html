@@ -1,0 +1,265 @@
+<app-seller-header></app-seller-header>
+<app-alert [message]="alertMessage"></app-alert>
+
+
+<div class="dashboard">
+  <div class="dash-content">
+    <div class="overview">
+      <div class="title-button">
+        <div class="title">
+          <i class="uil uil-tachometer-fast-alt"></i>
+          <span class="text">Dashboard</span>
+        </div>
+      </div>
+      <div class="boxes">
+        <div class="box">
+          <i class="uil uil-book"></i>
+          <span class="text">Total Boooks</span>
+          <span class="number" id="totalBooks">{{books.length}}</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="activity">
+        <div class="title-button">
+          <div class="title">
+            <i class="uil uil-clock-three"></i>
+            <span class="text">Books</span>
+          </div>
+            <button class="btn btn-secondary addbook-button" (click)="openAddBookModal()"><i class="uil uil-plus-circle"></i> Add Book </button>
+        </div>
+        
+        <div class="activity-data" class="table-wrapper">
+          <table class="responsive-table">
+            <thead>
+              <tr>
+                <th>Book ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Isbn</th>
+                <th>Published</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Description</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let book of books">
+                <td class="cell">{{book.book_id}}</td>
+                <td class="cell">{{ book.title }}</td>
+                <td class="cell">{{ book.author_name }}</td>
+                <td >{{ book.genre_name }}</td>
+                <td class="cell">{{ book.isbn }}</td>
+                <td >{{ book.published_date }}</td>
+                <td >{{book.price}}</td>
+                <td >{{book.stock}}</td>
+                <td><div class="scrollable-description">{{book.description}}</div></td>
+                <td class="book-button" (click)="openUpdateBookModal(book.title)"><i class="uil uil-pen icon"></i></td>
+                <td class="book-button" (click)="openDeleteBookModal(book.book_id, book.title)"><i class="uil uil-trash icon"></i></td>
+              </tr>
+            </tbody>
+          </table>        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update Book Modal -->
+<div *ngIf="isUpdateBookModalOpen" class="modal">
+  <div class="modal-content">
+    <div class="close">
+      <button type="button" class="btn-close" (click)="closeUpdateModal()"></button>
+    </div>
+    <h2>Update Book</h2>
+    <form class="bookmodal" (ngSubmit)="updateBook()" #updateBookForm="ngForm" novalidate>
+      
+      <!-- Book Title -->
+      <div class="form-group">
+        <label for="title">Book Title</label>
+        <input type="text" id="title" placeholder="Enter Book Title" [(ngModel)]="updatebook.title" name="title" #title="ngModel" required/>
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="error">Title is required.</div>
+      </div>
+
+      <!-- Author Name -->
+      <div class="form-group">
+        <label for="author_name">Author Name</label>
+        <input type="text" id="author_name" placeholder="Enter Author Name" [(ngModel)]="updatebook.author_name" name="author_name" #authorName="ngModel" required/>
+        <div *ngIf="authorName.invalid && (authorName.dirty || authorName.touched)" class="error">Author Name is required.</div>
+      </div>
+
+      <!-- Genre -->
+      <div class="form-group">
+        <label for="genre_name">Genre</label>
+        <select id="genre_name" [(ngModel)]="updatebook.genre_name" name="genre_name" #genre="ngModel" required>
+          <option value="" disabled>Select Genre</option>
+          <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+        </select>
+      </div>
+
+      <div class="price-stock">
+        <!-- Price -->
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="number" id="price" placeholder="Enter Price" [(ngModel)]="updatebook.price" name="price" min="0" step="0.01" (keypress)="validateNumberInput($event)" #price="ngModel" required/>
+          <div *ngIf="price.invalid && (price.dirty || price.touched)" class="error">Valid price is required.</div>
+        </div>
+  
+        <!-- Book Stock -->
+        <div class="form-group field">
+          <label for="stock">Book Stock</label>
+          <input type="number" id="stock" placeholder="Enter Book Stock" [(ngModel)]="updatebook.stock" name="stock" min="0" (keypress)="validateNumberInput($event)" #stock="ngModel" required/>
+          <div *ngIf="stock.invalid && (stock.dirty || stock.touched)" class="error">Stock is required.</div>
+        </div>
+      </div>
+
+      <!-- Published Date -->
+      <div class="form-group">
+        <label for="published_date">Published Date</label>
+        <input type="date" id="published_date" [(ngModel)]="updatebook.published_date" name="published_date" #publishedDate="ngModel" required/>
+        <div *ngIf="publishedDate.invalid && (publishedDate.dirty || publishedDate.touched)" class="error">Please select a published date.</div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Enter Description" [(ngModel)]="updatebook.description" name="description" #description="ngModel" required></textarea>
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="error">Description is required.</div>
+      </div>
+
+      <!-- Cover Image -->
+      <div class="form-group">
+        <label for="stock">Image</label>
+        <input type="file" id="cover_image" (change)="onFileChange($event)" accept="image/*" required/>
+      </div>
+
+      <div class="price-stock">
+        <!-- ISBN -->
+        <div class="form-group">
+          <label for="isbn">ISBN</label>
+          <input type="text" id="isbn" placeholder="Enter ISBN" [(ngModel)]="updatebook.isbn" name="isbn" #isbn="ngModel" required/>
+          <div *ngIf="isbn.invalid && (isbn.dirty || isbn.touched)" class="error">ISBN is required.</div>
+        </div>
+
+        <!-- Rating -->
+        <div class="form-group field">
+          <label for="rating">Rating</label>
+          <input type="number" id="rating" step="0.1" min="0" max="5" placeholder="Enter Book Rating" [(ngModel)]="updatebook.rating" name="rating" (keypress)="validateNumberInput($event)" #rating="ngModel" required/>
+          <div *ngIf="rating.invalid && (rating.dirty || rating.touched)" class="error">
+            Rating between 0 and 5 is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="delete">
+        <button class="hitbutton green" type="submit" [disabled]="updateBookForm.invalid">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Book Modal -->
+<div *ngIf="isDeleteBookModalOpen" class="modal">
+  <div class="modal-content">
+    <div class="close">
+      <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+    </div>
+    <h2>Delete Book</h2>
+    <form class="bookmodal" (submit)="deleteBook()">
+      <input type="text" [(ngModel)]="deletebook.title" name="book" required readonly>
+      <div class="delete">
+        <button class="hitbutton red" type="submit">Delete</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add Book Modal -->
+<div *ngIf="isAddBookModalOpen" class="modal">
+  <div class="modal-content">
+    <div class="close">
+      <button type="button" class="btn-close" (click)="closeAddModal()"></button>
+    </div>
+    <h2>Add New Book</h2>
+    <form class="bookmodal" (ngSubmit)="addBook()" #addBookForm="ngForm" novalidate>
+
+      <!-- Book Title -->
+      <div class="form-group">
+        <input type="text" id="title" placeholder="Enter Book Title" [(ngModel)]="newBook.title" name="title" #title="ngModel" required/>
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="error">Title is required.</div>
+      </div>
+
+      <!-- Author Name -->
+      <div class="form-group">
+        <input type="text" id="author_name" placeholder="Enter Author Name" [(ngModel)]="newBook.author_name" name="author_name" #authorName="ngModel" required/>
+        <div *ngIf="authorName.invalid && (authorName.dirty || authorName.touched)" class="error">Author Name is required.</div>
+      </div>
+
+      <!-- Genre -->
+      <div class="form-group">
+        <label for="genre_name">Genre</label>
+        <select id="genre_name" [(ngModel)]="newBook.genre_name" name="genre_name" #genre="ngModel" required>
+          <option value="" disabled>Select Genre</option>
+          <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+        </select>
+        <div *ngIf="genre.invalid && (genre.dirty || genre.touched)" class="error">Genre is required.</div>
+      </div>
+
+      <div class="price-stock">
+        <!-- Price -->
+        <div class="form-group">
+          <input type="number" id="price" placeholder="Enter Price" [(ngModel)]="newBook.price" name="price" min="0" step="0.01" (keypress)="validateNumberInput($event)" #price="ngModel" required/>
+          <div *ngIf="price.invalid && (price.dirty || price.touched)" class="error">Valid price is required.</div>
+        </div>
+  
+        <!-- Book Stock -->
+        <div class="form-group field">
+          <input type="number" id="stock" placeholder="Enter Book Stock" [(ngModel)]="newBook.stock" name="stock" min="0" max="150" (keypress)="validateNumberInput($event)" #stock="ngModel" required/>
+          <div *ngIf="stock.invalid && (stock.dirty || stock.touched)" class="error">Stock is required and must be between 0 and 150.</div>
+        </div>
+      </div>
+
+      <!-- Published Date -->
+      <div class="form-group">
+        <label for="published_date">Published Date</label>
+        <input type="date" id="published_date" [(ngModel)]="newBook.published_date" name="published_date" #publishedDate="ngModel" required/>
+        <div *ngIf="publishedDate.invalid && (publishedDate.dirty || publishedDate.touched)" class="error">Published date is required.</div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <textarea id="description" placeholder="Enter Description" [(ngModel)]="newBook.description" name="description" #description="ngModel" required></textarea>
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="error">Description is required.</div>
+      </div>
+
+      <!-- Cover Image -->
+      <div class="form-group">
+        <label for="cover_image">Cover Image</label>
+        <input type="file" id="cover_image" (change)="onFileChange($event)" accept="image/*" required/>
+      </div>
+
+      <div class="price-stock">
+        <!-- ISBN -->
+        <div class="form-group">
+          <input type="text" id="isbn" placeholder="Enter ISBN" [(ngModel)]="newBook.isbn" name="isbn" #isbn="ngModel" required/>
+          <div *ngIf="isbn.invalid && (isbn.dirty || isbn.touched)" class="error">ISBN is required.</div>
+        </div>
+
+        <!-- Rating -->
+        <div class="form-group field">
+          <input type="number" id="rating" step="0.1" min="0" max="5" placeholder="Enter Book Rating" [(ngModel)]="newBook.rating" name="rating" (keypress)="validateNumberInput($event)" #rating="ngModel" required/>
+          <div *ngIf="rating.invalid && (rating.dirty || rating.touched)" class="error">Rating must be between 0 and 5.</div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="delete">
+        <button class="hitbutton green" type="submit" [disabled]="addBookForm.invalid">Add Book</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="top">
+    <div>
+      <a routerLink="/admin"><label class="logo"><img class="logo-icon" src="../assets/images/booklogo_3.png" alt="Logo"/></label></a> 
+    </div>
+    <div class="logout">
+      <a routerLink="/login" class="logout-text">Logout</a>
+    </div>
+</div>
+  
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page"><a routerLink="/admin">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Order</li>
+    </ol>
+</nav>
+
+
+  <div *ngIf="loading" class="loading-spinner">
+    <p>Loading order details...</p>
+  </div>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+  
+<div *ngIf="!loading && !errorMessage">
+    <div class="orders-card">
+        <div class="user-details">
+            <h3>Seller Details</h3>
+            <div class="user">
+              <h4 class="headers">Username</h4>
+              <h4 class="data">{{ orderDetails.username | titlecase }}</h4>
+            </div>
+            <div class="user">
+              <h4 class="headers">Books</h4>
+              <h4 class="data">{{ orderDetails.items.length }}</h4>
+            </div>
+            <div class="user">
+              <h4 class="headers">Total Amount</h4>
+              <h4 class="data">{{ orderDetails.total_amount }}</h4>
+            </div>
+            <div class="user">
+              <h4 class="headers">Ordered</h4>
+              <h4 class="data">{{ orderDetails.order_date | date: 'shortDate' }}</h4>
+            </div>
+            <div class="user">
+              <h4 class="headers">Address</h4>
+              <h4 class="data">{{orderDetails.address}}</h4>
+            </div>
+        </div>
+        <div class="order-details" *ngFor="let item of items">
+            <div class="box">
+                <div class="details">
+                    <div class="text-section">
+                    <h1>{{ item.title }}</h1>
+                    <h2>by {{ item.author_name }}</h2>
+                    </div>
+                    <div class="price-section">
+                    
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <h4>Price: <span>{{ item.price * item.quantity | currency: 'INR' }}</span></h4>
+                    </div>
+                </div>
+                <div class="img-box">
+                    <img class="ordersImg" [src]="item.image ? '/assets/images/' + item.image : 'assets/images/placeholder.png'" alt="Book Image"/>
+                    <div *ngIf="!item.image">
+                        <p>Unavailable</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  

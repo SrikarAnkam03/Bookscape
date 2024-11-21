@@ -1,0 +1,18 @@
+div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: black;
+    background-color: #e7e7e75e;
+}
+h1{
+    font-weight: bolder;
+}
+
+@media (max-width: 700px){
+    h1{
+        font-size: medium;
+    }
+}

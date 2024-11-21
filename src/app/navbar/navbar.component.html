@@ -1,0 +1,72 @@
+<nav class="top">
+  <div class="logo-container" routerLink="/home" routerLinkActive="active">
+    <img src="../assets/images/booklogo_3.png" alt="Logo" class="logo-default" />
+    <img src="../assets/images/booklogo_1.png" alt="Active Logo" class="logo-active" />
+  </div>
+  
+  <ul class="nav-links" [ngClass]="{'open': isSidebarOpen}">
+    <!-- <li>
+      <a routerLink="/home" routerLinkActive="active"><i class="uil uil-store"></i> Home</a>
+    </li> -->
+    <li>
+      <a routerLink="/cart" routerLinkActive="active"><i class="fas fa-cart-shopping"></i>CART<span *ngIf="cartCount > 0" class="badge">{{ cartCount }}</span></a>
+    </li>
+    <li>
+      <a routerLink="/wishlist" routerLinkActive="active"><i class="fas fa-heart"></i>WISHLIST</a>
+    </li>
+    <li class="dropdown" (click)="toggleDropdown()">
+      <a class="dropbtn"><i class="fas fa-solid fa-user-circle"></i></a>
+      <ul class="dropdown-content" [ngClass]="{'show': isDropdownOpen}"> 
+        <li>
+          <a routerLink="/profile" routerLinkActive="active"><i class="uil uil-user"></i>Profile</a>
+        </li>
+        <li>
+          <a routerLink="/wallet" routerLinkActive="active"><i class="uil uil-wallet"></i>Wallet</a>
+        </li>
+        <li>
+          <a routerLink="/address" routerLinkActive="active"><i class="uil uil-map-marker"></i>Address</a>
+        </li>
+        <li>
+          <a routerLink="/orders" routerLinkActive="active"><i class="uil uil-shopping-bag"></i>Orders</a>
+        </li>
+        <li>
+          <a (click)="logout()"><i class="fas fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <div class="hamburger" (click)="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav> 
+
+<aside class="sidebar" [ngClass]="{'open': isSidebarOpen}">
+  <ul>
+    <li>
+      <a routerLink="/home" routerLinkActive="active">Home</a>
+    </li>
+    <li>
+      <a routerLink="/cart" routerLinkActive="active">Cart</a>
+    </li>
+    <li>
+      <a routerLink="/wishlist" routerLinkActive="active">Wishlist</a>
+    </li>
+    <li>
+      <a routerLink="/address" routerLinkActive="active">Address</a>
+    </li>
+    <li>
+      <a routerLink="/orders" routerLinkActive="active">Orders</a>
+    </li>
+    <li>
+      <a routerLink="/profile" routerLinkActive="active">Profile</a>
+    </li>
+    <li>
+      <a routerLink="/wallet" routerLinkActive="active">Wallet</a>
+    </li>
+    <li>
+      <a (click)="logout()" routerLinkActive="active">Logout</a>
+    </li>
+  </ul>
+</aside>

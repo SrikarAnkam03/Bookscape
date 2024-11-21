@@ -1,0 +1,132 @@
+<app-navbar></app-navbar>
+
+<div class="cartpage">
+  <div *ngIf="cartItems.length > 0; else emptyCart" class="cart">
+    <h1 class="cart-title">SHOPPING CART</h1>
+    <div class="cart-card">
+      <div class="cart-details" *ngFor="let item of cartItems">
+        <div class="box" [ngClass]="{ 'disabled': item.display === false }">
+          <!-- Image Section with Out of Stock Label -->
+          <div class="img-box" (click)="viewBookDetails(item.title)" [ngClass]="{'outofstock': item.stock === 0}">
+            <img [src]="'/assets/images/' + item.cover_image_url" class="cartImg" alt="Book Image">
+          </div>
+      
+          <div class="details">
+            <!-- Overlay for Unavailable Items -->
+            <div *ngIf="item.display === false" class="unavailable-overlay">
+              <p>Unavailable</p>
+            </div>
+      
+            <!-- Item Details -->
+            <div class="details-block" [ngClass]="{'out-of-stock': item.stock === 0, 'overloaded': item.stock < item.quantity}">
+              <div (click)="viewBookDetails(item.title)">
+                <h1>{{item.title}}</h1>
+                <h2>{{item.author_name}}</h2>
+              </div>
+      
+              <!-- Stock Information -->
+              <div class="stock-info">
+                <span *ngIf="item.stock > 0 && item.stock < item.quantity" class="stock-warning">
+                  Only {{ item.stock }} left in stock
+                </span>
+              </div>
+      
+              <div style="width: 100%;">
+                <!-- Quantity Selector -->
+                <div class="counter-container">
+                  <h3 (click)="viewBookDetails(item.title)">Quantity :</h3>
+                  <div class="counter">
+                    <button class="counter-btn" (click)="decreaseQuantity(item)" [disabled]="item.quantity <= 1"> - </button>
+                    <span id="counter-value">{{ item.quantity }}</span>
+                    <button class="counter-btn" (click)="increaseQuantity(item)" [disabled]="item.quantity >= item.stock || item.stock === 0"> + </button>
+                  </div>
+                </div>
+      
+                <!-- Price Information -->
+                <h3 class="price" (click)="viewBookDetails(item.title)">
+                  Price : <span>{{ item.price | currency:'INR' }}</span>
+                </h3>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Trash Button for Removing Item -->
+          <span class="trash" (click)="removeFromCart(item.cart_item_id)">
+            <i class="fa-solid fa-trash"></i>
+          </span>
+        </div>
+      </div>
+      
+    </div>
+    <div class="total-price">
+      <h3 class="amount">Total Amount: <span>{{ getTotalPrice() | currency:'INR'}}</span></h3>   
+    </div>
+    <div class="buttons">
+      <button class="btn btn-primary" (click)="proceedToCheckout()" (click)="proceedToCheckout()" [disabled]="hasUnavailableItems()"> Proceed to Checkout </button>    
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="cart">
+      <h1 class="emptyCart-title">SHOPPING CART</h1>
+      <div class="cart-card">
+        <div class="empty-cart">
+          <h1 class="empty-text">Your Cart is Empty</h1>
+        </div>
+      </div>
+      <div class="total-price">
+        <h3 class="total price">Total Amount: <span>{{ 0.00 | currency:'INR'}}</span></h3>   
+      </div>
+      <div class="buttons">
+        <button class="btn btn-primary" (click)="openModal()" disabled>Proceed to Checkout</button>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<div *ngIf="isModalOpen" id="checkoutModal" class="modal">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-container">
+    <div class="d-flex flex-row justify-content-between" style="align-items: center;">
+      <h1 class="text-center">CHECKOUT CONFIRMATION</h1>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-content">
+      <div class="checkout">
+        <div class="checkout-book">
+          <h5 style="font-weight: 600;">Book</h5>
+          <h5 style="font-weight: 600;">Quantity</h5>
+        </div>
+          <h5 style="font-weight: 600;">Amount</h5>
+      </div>
+      <div *ngFor="let item of cartItems">
+        <div class="checkout">
+          <div class="checkout-book">
+            <h5 style="padding-right: 25%;">{{item.title}}</h5>
+            <h5>x{{item.quantity}}</h5>
+          </div>
+            <h5>{{item.price | currency:'INR'}}</h5>
+        </div>
+      </div>
+      <div class="checkout">
+        <h4><strong>Total Amount:</strong></h4>
+        <h4><strong>{{ getTotalPrice() | currency:'INR' }}</strong></h4>
+      </div>
+    </div>
+    <div class="address">
+      <p>Select your Delivery Address :</p>
+      <select class="dropdown" aria-label="Select address" [(ngModel)]="selectedAddressId" (change)="checkForNewAddress()">
+        <option *ngIf="addresses.length === 0" selected disabled>No Addresses Available</option>
+        <option *ngFor="let address of addresses" [value]="address.address_id">{{ address.recipient_name }} - {{ address.address_type }}</option>
+        <option value="new">Add New Address</option>
+      </select>
+    </div>
+    <div class="buttons">
+      <button class="modal-btn yes" (click)="confirmOrder()">CONFIRM</button>
+      <button class="modal-btn no" (click)="closeModal()">CANCEL</button>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close" (click)="closeModal()"></button>
+</div>
+
+<app-footer></app-footer>

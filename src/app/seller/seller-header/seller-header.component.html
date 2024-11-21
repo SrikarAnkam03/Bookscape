@@ -1,0 +1,47 @@
+<nav class="nav">
+  <div class="logo" routerLink="/dashboard">
+    <img src="../assets/images/booklogo_3.png" alt="Logo" />
+  </div>
+  <ul class="nav-links" [ngClass]="{'open': isSidebarOpen}">
+    <li>
+      <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
+    </li>
+    <li>
+      <a routerLink="/sellerprofile" routerLinkActive="active-link">Profile</a>
+    </li>
+    <li>
+      <a routerLink="/sellerWallet" routerLinkActive="active-link">Wallet</a>
+    </li>
+    <li>
+      <a routerLink="/sellerOrders" routerLinkActive="active-link">Orders</a>
+    </li>
+    <li>
+      <a routerLink="/login" routerLinkActive="active-link" (click)="logout()">Logout</a>
+    </li>
+  </ul>
+  <div class="hamburger" (click)="toggleSidebar()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<aside class="sidebar" [ngClass]="{'open': isSidebarOpen}">
+  <ul>
+    <li>
+      <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
+    </li>
+    <li>
+      <a routerLink="/sellerprofile" routerLinkActive="active-link">Profile</a>
+    </li>
+    <li>
+      <a routerLink="/sellerWallet" routerLinkActive="active-link">Wallet</a>
+    </li>
+    <li>
+      <a routerLink="/sellerOrders" routerLinkActive="active-link">Orders</a>
+    </li>
+    <li>
+      <a routerLink="/login" routerLinkActive="active-link" (click)="logout()">Logout</a>
+    </li>
+  </ul>
+</aside>

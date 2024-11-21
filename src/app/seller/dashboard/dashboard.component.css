@@ -1,0 +1,445 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard{
+    min-height: 100vh;
+    padding: 0px 30px;
+    padding-top: 60px;
+}
+.dash-content .title-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.addbook-button{
+    padding: 10px;
+    width: 120px;
+}
+
+.dash-content .title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dash-content .title i{
+    position: relative;
+    height: 45px;
+    width: 45px;
+    background-color: #bdbdbdab;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+.dash-content .title .text{
+    text-transform: capitalize;
+    font-size: 24px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+.dash-content .boxes{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.dash-content .boxes .box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: 15px 20px;
+    background-color: #bdbdbd8c;
+    width: 100%;
+}
+.boxes .box i{
+    font-size: 35px;
+}
+.boxes .box .text{
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 500;
+}
+.boxes .box .number{
+    font-size: 40px;
+    font-weight: 500;
+}
+
+
+.dash-content .activity .activity-data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.activity .activity-data{
+    display: flex;
+}
+.activity-data .data{
+    display: flex;
+    flex-direction: column;
+    margin: 0 15px;
+}
+.activity-data .data-title{
+    font-size: 20px;
+    font-weight: 500;
+}
+.activity-data .data .data-list{
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 20px;
+    white-space: nowrap;
+}
+
+.responsive-table th{
+    font-size: 15px;
+}
+.responsive-table td{
+    font-size: 14px;
+}
+
+.cell{
+    width: 200px;
+}
+/* Modal style */
+.modal {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000080;
+}
+
+.modal-content{
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px; 
+    border-radius: 8px;
+    font-size: 12px;
+    position: relative;
+}
+
+.price-stock{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.price-stock .field{
+    width: 100%;
+    margin-left: 10px;
+
+}
+
+.bookmodal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal-content input{
+    border-radius: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 100%;
+}
+
+textarea{
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom:5px;
+    margin-top: 5px;
+    padding: 10px;
+    width: 100%;
+}
+
+select{
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #d6d6d6;
+    color: #333;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+.modal-content h2{
+    color: #646464d2;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.hitbutton {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    color: #333;
+    background: #bdbdbd;
+    border: none;
+    width: 100px;
+}
+
+.red:hover {
+    background-color: #b90000;
+    color: #fff;
+}
+
+.green:hover{
+    background-color: #00be00;
+    color: #fff;
+}
+
+.delete{
+    display: flex;
+    justify-content: center;
+}
+
+/* Close Button */
+.close{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.btn-close {
+    font-size: 15px;
+    color: #000000;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000000;
+    text-decoration: none;
+}
+
+.activity-data .table-wrapper {
+    overflow: auto;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    max-height: 450px;
+    overflow-y: auto; 
+}
+
+.responsive-table {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+}
+
+.responsive-table th,
+.responsive-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.scrollable-description {
+    max-height: 80px;  
+    overflow-y: auto;   
+    padding: 5px;      
+}
+
+.responsive-table th {
+    background-color: #3a3a3a;
+    color: #ddd;
+    position: sticky; 
+    top: 0;
+    z-index: 10;
+}
+
+.responsive-table tr:hover{
+    background-color: #3b3b3bc9;
+    color: #fff;
+}
+
+.icon{
+    font-size: 20px;
+}
+
+.book-button:hover{
+    cursor: pointer;
+    color: #00e699;
+}
+
+.book-button{
+    width: 50px;
+}
+
+
+.error{
+    text-align: center;
+    color: #b90000;
+}
+
+.error-message{
+    text-align: center;
+    font-size: 12px;
+    color: red;
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+    .boxes{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 12px;
+        width: 100%;
+    }
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button {
+        width: 100%;
+        margin-bottom: 10px; 
+        font-size: 14px;
+    }
+
+    .btn:last-child {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn {
+        padding: 8px 16px; 
+        font-size: 12px;
+    }
+}
+
+
+@media (max-width: 1000px) {
+    nav{
+        width: 73px;
+    }
+    nav.close{
+        width: 250px;
+    }
+    nav .logo_name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close .logo_name{
+        opacity: 1;
+        pointer-events: auto;
+    }
+    nav li a .link-name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close li a .link-name{
+        opacity: 1;
+        pointer-events: auto;
+    }
+    nav ~ .dashboard{
+        left: 73px;
+        width: calc(100% - 73px);
+    }
+    nav.close ~ .dashboard{
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+    nav ~ .dashboard .top{
+        left: 73px;
+        width: calc(100% - 73px);
+    }
+    nav.close ~ .dashboard .top{
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+    .activity .activity-data{
+        overflow-X: scroll;
+    }
+}
+
+@media (max-width: 780px) {
+    .dash-content .boxes .box{
+        width: 100%;
+    }
+}
+@media (max-width: 560px) {
+    .dash-content .boxes .box{
+        width: 100% ;
+    }
+}
+@media (max-width: 400px) {
+    nav{
+        width: 0px;
+    }
+    nav.close{
+        width: 73px;
+    }
+    nav .logo_name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close .logo_name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav li a .link-name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav.close li a .link-name{
+        opacity: 0;
+        pointer-events: none;
+    }
+    nav ~ .dashboard{
+        left: 0;
+        width: 100%;
+    }
+    nav.close ~ .dashboard{
+        left: 73px;
+        width: calc(100% - 73px);
+    }
+    nav ~ .dashboard .top{
+        left: 0;
+        width: 100%;
+    }
+    nav.close ~ .dashboard .top{
+        left: 0;
+        width: 100%;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+ 
+    table th, table td {
+        padding: 8px;
+    }
+
+    #get-details-btn {
+        margin-top: 10px;
+    }
+}

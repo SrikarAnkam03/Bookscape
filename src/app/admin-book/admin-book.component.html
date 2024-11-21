@@ -1,0 +1,53 @@
+<div class="top">
+    <div>
+      <a routerLink="/admin"><label class="logo"><img class="logo-icon" src="../assets/images/booklogo_3.png" alt="Logo"/></label></a> 
+    </div>
+    <div class="logout">
+      <a routerLink="/login" class="logout-text" (click)="logout()"> Logout</a>
+    </div>
+</div>
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a routerLink="/admin">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Book</li>
+    </ol>
+</nav>
+
+<div class="book-details" *ngIf="book; else loading">
+    <div class="bookpage">
+        <div class="box">
+            <div class="img-box">
+                <img src="/assets/images/{{ book.cover_image_url }}" class="bookImg" alt="{{ book.title }}">
+            </div>
+            <div class="details">
+                <div class="d-flex flex-column">
+                    <h1 >{{ book.title | uppercase }}</h1>
+                    <h4>by {{ book.author_name }}</h4>
+                    <p>Published on: {{ book.published_date | date }}</p>
+                    <p class="rating">
+                    <ng-container *ngFor="let star of getStars(book.rating)">
+                        <span *ngIf="star.filled">★</span>
+                        <span *ngIf="!star.filled">☆</span>
+                    </ng-container>
+                    </p>
+                </div>
+                <div>
+                    <p [ngClass]="{ 'out-of-stock': book.stock === 0 }">
+                        <span class="stock">{{ book.stock > 0 ? 'Stock: ' + book.stock : 'Out of Stock' }}</span>
+                    </p>
+                    <p>ISBN: {{ book.isbn }}</p>
+                    <h3 >Price: <span class="price">{{ book.price | currency:'INR' }}</span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="titles">
+            <h3>Description</h3>
+            <p>{{ book.description }}</p>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <p>Loading book details...</p>
+</ng-template>

@@ -1,0 +1,55 @@
+<app-navbar></app-navbar>
+
+<div class="wishlistpage">
+  <div *ngIf="wishlistItems.length > 0; else emptywishlist" class="wishlist"> 
+    <div class="wishlist-title">
+      <h1>WISHLIST</h1>
+    </div>
+    <div class="wishlist-card">
+      <div class="wishlist-details" *ngFor="let item of wishlistItems">
+        <div class="box" [ngClass]="{'disabled': item.display === false}">
+          <div class="img-box" (click)="viewBookDetails(item.title)">
+            <img class="wishlistImg" [src]="'/assets/images/' + item.cover_image_url" alt="Book Image">
+          </div>
+          <div class="wishlist-item">
+            <div *ngIf="item.display === false" class="unavailable-overlay">
+              <p>Unavailable</p>
+            </div>
+            <div class="details">
+              <h1 style="font-weight: bold;" (click)="viewBookDetails(item.title)">{{ item.title }}</h1>
+              <h2 (click)="viewBookDetails(item.title)">{{ item.author }}</h2>
+              <p class="rating">
+                <ng-container *ngFor="let star of getStars(item.rating); let i = index">
+                  <span *ngIf="star.filled">★</span> 
+                  <span *ngIf="!star.filled">☆</span>
+                </ng-container>
+              </p>
+            </div>
+            <div class="price-buttons">
+                <h3 class="price" (click)="viewBookDetails(item.title)"> Price: <span style="color: #00caca;">{{item.price | currency:'INR' }}</span></h3>   
+              <div class="buttons">
+                <button class="btn btn-add" (click)="addToCart(item)" [disabled]="item.stock === 0">{{ item.stock > 0 ? 'ADD TO CART' : 'OUT OF STOCK' }}</button>
+                <button class="btn btn-remove" (click)="removeFromWishlist(item.book_id)">  REMOVE</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptywishlist>
+    <div class="wishlist">
+      <div class="wishlist-title">
+        <h1>WISHLIST</h1>
+      </div>
+      <div class="wishlist-card">
+        <div class="empty-wishlist">
+          <h3 class="empty-text">Your wishlist is empty. Start adding books you love!</h3>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<app-footer></app-footer>

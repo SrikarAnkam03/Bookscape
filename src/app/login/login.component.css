@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #146388b7;
+}
+
+.wrapper {
+  margin-top: 100px;
+  position: relative;
+  max-width: 430px;
+  width: 100%;
+  background: #f0f8ffcb;
+  padding: 34px;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px #00000033;
+}
+
+.wrapper h2 {
+  position: relative;
+  font-size: 30px;
+  font-weight: 600;
+  color: #333;
+}
+
+.wrapper h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 28px;
+  border-radius: 12px;
+  background: #2f80cc;
+}
+
+.wrapper form {
+  margin-top: 30px;
+}
+
+.wrapper form .input-box {
+  height: 52px;
+  margin: 25px 0;
+}
+
+.wrapper form .pass {
+  padding: 3px;
+}
+
+.wrapper form .pass a {
+  color: #006cd1;
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 5px;
+  text-decoration: none;
+}
+
+.wrapper form .pass a:hover {
+  color: #0380a7;
+  text-decoration: none;
+}
+
+.input-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #1f1e1e;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.input-box input:focus,
+.input-box input:valid {
+  border-color: #81c8ddb9;
+}
+
+.input-box input.invalid {
+  border-color: #ff4d4d;
+}
+
+.error-message {
+  color: #c90000;
+  font-size: 16px;
+  text-align: center;
+
+}
+
+.input-box.button input {
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background: #44a2be;
+  cursor: pointer;
+}
+
+.input-box.button input:hover {
+  background: #0380a7;
+  color: white;
+}
+
+.text h3 {
+  color: #333333;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.text h3 a {
+  color: #44a2be;
+  text-decoration: none;
+}
+
+.text h3 a:hover {
+  color: #0380a7;
+  text-decoration: none;
+}

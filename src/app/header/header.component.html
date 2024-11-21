@@ -1,0 +1,14 @@
+<header>
+  <nav class="navbar">
+    <a routerLink="/login" class="logo">
+      <img src="/assets/images/booklogo_1.png" class="logoimg">
+    </a>
+    <div>
+      <button *ngIf="isSignupPage" routerLink="/seller" class="help-btn">SELLER SIGNUP</button>
+
+      <button *ngIf="isSellerPage" routerLink="/signup" class="help-btn">USER SIGNUP</button>
+
+      <button *ngIf="!isSignupPage && !isSellerPage" routerLink="/seller" class="help-btn">SELLER SIGNUP</button>
+    </div>
+  </nav>
+</header>

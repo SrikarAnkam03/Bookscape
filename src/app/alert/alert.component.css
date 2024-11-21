@@ -1,0 +1,39 @@
+
+.alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 1;
+    margin: 85px 20px;
+    display: flex;
+    justify-content: right;
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .alert-modal {
+    width: auto;
+    font-weight: 600;
+    text-align: right;
+    align-content: center;
+  }
+
+  .alert-modal p{
+    font-size: 12px;
+    margin: 5px 0px;
+    border-radius: 8px;
+    padding: 10px 20px;
+    background-color: #fff6ccf5;
+    box-shadow: 0 4px 8px #00000033;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

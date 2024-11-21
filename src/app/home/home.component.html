@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<app-alert [message]="alertMessage"></app-alert>
+
+<div class="body">
+  <div class="search-container">
+      <div class="input-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" [(ngModel)]="searchTerm" (keyup)="onSearch()" placeholder="Search for books..." class="search-input"/>
+      </div>
+      <button (click)="onSearch()" class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+      <!-- <div style="align-content: center;">l
+        <i class="uil uil-filter"></i>
+        <i class="uil uil-sort"></i>      
+      </div> -->
+  </div>
+  <div *ngIf="filteredBooks.length > 0; else noBooks">
+    <div class="container-fluid">
+      <div class="row g-3">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 card-wrapper" *ngFor="let book of filteredBooks">
+          <div class="card">
+            <div class="image-container">
+              <div class="image-box" (click)="viewBookDetails(book.title)">
+                <img src="/assets/images/{{book.cover_image_url}}" alt="{{book.title}}" />
+              </div>
+            </div>
+            <div class="book-card">
+              <div class="name-price">
+                <h3 class="name" (click)="viewBookDetails(book.title)">{{ book.title }}</h3>
+                <h6 class="author" (click)="viewBookDetails(book.title)">by {{ book.author_name }}</h6>
+                <div class="price-icon">
+                  <h4 class="price">{{ book.price | currency:'INR' }}</h4>
+                  <i class="fa-heart" 
+                     [ngClass]="{'fa-solid': book.favorited, 'fa-regular': !book.favorited}" 
+                     (click)="toggleFavorite(book)"
+                     aria-hidden="true">
+                  </i>
+                </div>
+              </div>
+              <div class="text-center">
+                <button class="btn buy" (click)="viewBookDetails(book.title)">VIEW DETAILS</button>
+                <button class="btn add" (click)="addToCart(book)" [disabled]="book.stock == 0">{{ book.stock > 0 ? 'ADD TO CART' : 'OUT OF STOCK' }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <ng-template #noBooks>
+    <div class="no-results">No results found</div>
+  </ng-template>
+  
+</div>
+
+<app-footer></app-footer>

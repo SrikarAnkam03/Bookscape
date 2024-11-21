@@ -1,0 +1,431 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family:'Poppins';
+}
+
+.dashboard {
+    min-height: 100vh;
+    padding: 100px 10px;
+}
+
+.top {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #81c8dd;
+    font-size: 18px;
+    padding: 15px;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav{
+    box-shadow: 0px 1px 3px -1px #000000;
+    z-index: 900;
+}
+
+label.logo {
+    color: white;
+    padding: 0 20px;
+    font-weight: bold;
+}
+  
+.logo-icon{
+    width: 180px;
+    cursor: pointer;
+}
+
+.top .search-box {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.top input {
+    border-radius: 6px;
+    border: 1px solid #8dc1fc;
+    padding: 5px 10px;
+    margin-left: 5px;
+}
+
+.logout{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logout-text{
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.logout-text:hover{
+    font-weight: 800;
+}
+
+nav{
+    background-color: #dddddd;
+    align-items: center;
+    padding-top: 70px;
+    width: 100%;
+    border-radius: 0px;
+    position: fixed;
+}
+
+.breadcrumb{
+    margin: 0px;
+}
+
+nav .active{
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 30px;
+}
+
+.sidebar-toggle {
+    padding-left: 20px;
+    font-size: 30px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.title .icon {
+    font-size: 25px;
+    color: #2b96e7;
+}
+
+.title .text {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.boxes {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    height: 160px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px #0000001a;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.box i {
+    font-size: 35px;
+    color: #004d88;
+}
+
+.box .text {
+    font-size: 20px;
+    color: #004d88;
+}
+
+.box .number {
+    font-family:Arial, Helvetica, sans-serif;
+    color: #004d88;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.box:hover {
+    background-color: #8dc1fc7e;
+}
+
+.selected {
+    background-color: #8dc1fc;
+    color: white; 
+}
+
+.selected.box i{
+    color: #fff;
+}
+.selected.box .text{
+    color: #fff;
+}
+.selected.box .number{
+    color: #fff;
+}
+
+.activity {
+    margin-top: 20px;
+}
+
+.activity-data {
+    min-height: 550px;
+    margin: 0px 20px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    overflow-y: auto; 
+}
+
+.responsive-table {
+    width: 100%;
+    height: 100%;
+    background-color: #f2f6ff;
+    border-collapse: collapse;
+}
+
+.responsive-table th,
+.responsive-table td {
+    padding: 10px;
+    font-size: 15px;
+    /* text-align: center; */
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.responsive-table th {
+    background-color: #8dc1fc;
+    position: sticky; 
+    top: 0;
+    z-index: 10;
+}
+
+.uil-sort{
+    cursor: pointer;
+}
+
+.responsive-table .select:hover{
+    background-color: #5e8dc4; 
+    color: #fff;
+    cursor: pointer;
+}
+
+.delete:hover{
+    background-color: #9b0000;
+    color: #fff;
+}
+
+.activity-data .table-wrapper {
+    overflow: auto;
+}
+
+.badge {
+    background-color: #0d48a1;
+    color: white;
+    padding: 0.6em 0.8em;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    position: relative;
+    top: -10px;
+    left: 10px;
+    font-weight: bold;
+}
+
+a {
+    position: relative;
+    display: inline-block;
+}
+
+.show {
+    display: table-header-group;
+}
+
+.approve {
+    cursor: pointer;
+    color: #333;
+}
+
+.approve:hover {
+    color:#fff
+}
+
+.modal {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background-color: #0000008f; 
+}
+
+.modal-content{
+    width: 100%;
+    padding: 20px;
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+    text-align: center;
+    border: 1px solid #888;
+    background-color: #fefefe;
+}
+
+.modal-close{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+  }
+  
+  .btn-close {
+    font-size: 15px;
+    color: #000000;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000000;
+    text-decoration: none;
+  }
+
+.deletemodal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal-buttons{
+    display: flex;
+    margin-top: 30px;
+
+}
+
+.modal-button{
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+    color: #333;
+    border-radius: 5px;
+    border:solid 2px #8dc1fc;
+    background-color: #ffffff00;
+}
+
+.no{
+    color: #333;
+    background-color: #8dc1fc;
+}
+
+.edit:hover{
+    color: #fff;
+    border: solid 2px #004d88;
+    background-color: #004d88;
+}
+
+.no:hover{
+    border: none;
+    color: #fff;
+    border: solid 2px #004d88;
+    background-color: #004d88;
+}
+
+.red:hover{
+    border: none;
+    color: #fff;
+    background-color: #9c0000;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-controls button {
+    padding: 8px 16px;
+    margin: 0 10px;
+    border: none;
+    background-color: #8dc1fc;
+    color: #000;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .pagination-controls button:hover {
+    color: #fff;
+    background-color: #004d88;
+  }
+  
+  .pagination-controls button:disabled {
+    background-color: #8888885e;
+    cursor: not-allowed;
+  }
+  
+  .pagination-controls span {
+    font-size: 16px;
+  }
+
+  .pagination-controls .active {
+    color: #fff;
+    background-color: #004d88;
+  }
+
+@media (max-width: 850px) {
+    .box {
+        height: 130px;
+    }
+
+    .box .text {
+        font-size: 13px;
+    }
+
+    .box .number {
+        font-size: 15px;
+    }
+
+    .box i {
+        font-size: 30px;
+        color: #2b96e7;
+    }
+}
+
+@media (max-width: 600px) {
+    label.logo {
+        color: white;
+        padding: 0 10px;
+        font-weight: bold;
+    }
+    
+    .logo-icon{
+        width: 100px;
+        cursor: pointer;
+    }
+
+    nav{
+        width: 100%;
+        position: fixed;
+        padding-top: 55px;
+        border-radius: 0px;
+    }
+
+    .search-box input {
+        display: none;
+    }
+
+    .box i {
+        font-size: 30px;
+        color: #2b96e7;
+    }
+
+    .box {
+        width: 100%;
+        height: 60px;
+        padding: 10px;
+        font-size: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

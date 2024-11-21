@@ -1,0 +1,46 @@
+<app-header></app-header>
+<body>
+  <div class="wrapper">
+    <h2>Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <!-- Email Field -->
+      <div class="input-box">
+        <input type="text" formControlName="email" placeholder="Enter your email" [class.invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" required >
+        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="error-message">
+          <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</small>
+        </div>
+      </div>
+  
+      <!-- Password Field -->
+      <div class="input-box">
+        <input type="password" formControlName="password" placeholder="Enter your password" [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" required>
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="error-message">
+          <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['maxlength']">Password cannot exceed 15 characters.</small>
+        </div>
+      </div>
+  
+      <div class="pass">
+        <a routerLink="/forgotPassword">Forgot password?</a>
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="input-box button">
+        <input type="submit" value="Login">
+      </div>
+
+      <!-- Registration Link -->
+      <div class="text">
+        <h3>Not a member? <a routerLink="/signup">Signup Now</a></h3>
+      </div>
+
+      <!-- Display error message -->
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </form>
+  </div>
+</body>
+<app-footer></app-footer>

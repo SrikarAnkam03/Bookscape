@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+
+<div class="orderspage">
+  <div class="orders"> 
+    <div class="orders-title">
+      <h1>ORDERS</h1>
+    </div>
+    <div *ngIf="orders && orders.length > 0; else emptyorders">
+      <div class="orders-card">
+        <div *ngFor="let order of orders">
+          <div class="orders-details">
+            <div *ngFor="let item of order.items">
+              <div class="box" [ngClass]="{ 'disabled': item.display === false }" (click)="item.display ? viewBookDetails(item.title) : null">
+                <div class="details">
+                  <div>
+                    <h1>{{ item.title }}</h1> 
+                    <h2>{{ item.author_name }}</h2>
+                    <h5>Order Date : {{ order.order_date | date }}</h5> 
+                  </div>
+                  <div>
+                    <p>Quantity  {{ item.quantity }}</p> 
+                    <h4>Price <span>{{ item.price*item.quantity | currency:'INR' }}</span></h4>
+                  </div>
+                </div>
+                <div class="img-box" (click)="item.display ? viewBookDetails(item.title) : null">
+                  <img class="ordersImg" [src]="'/assets/images/' + item.image" alt="Book Image">
+                  <div *ngIf="item.display === false" class="unavailable-overlay">
+                    <p>Unavailable</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #emptyorders>
+        <div class="orders-card">
+          <div class="empty-orders">
+            <h3 class="empty-text">Your orders list is empty. Start shopping now!</h3>
+          </div>
+        </div>
+    </ng-template>
+  </div>
+</div>
+
+<app-footer></app-footer>

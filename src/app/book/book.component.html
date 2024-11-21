@@ -1,0 +1,158 @@
+<app-navbar></app-navbar>
+<app-alert [message]="alertMessage"></app-alert>
+
+
+<div class="book-details" *ngIf="book; else loading">
+    <div class="bookpage">
+        <div class="box">
+            <div class="img-box">
+                <img src="/assets/images/{{ book.cover_image_url }}" class="bookImg" alt="{{ book.title }}">
+            </div>
+            <div class="details">
+                <div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <h1 >{{ book.title | uppercase }}</h1>
+                        <i class="fa-heart" 
+                            [ngClass]="{'fa-solid': book.favorited, 'fa-regular': !book.favorited}" 
+                            (click)="toggleFavorite(book)"
+                            aria-hidden="true">
+                        </i>
+                    </div>
+                    <h4>by {{ book.author_name }}</h4>
+                    <p>Published on: {{ book.published_date | date }}</p>
+                    <p class="rating">
+                        <ng-container *ngFor="let star of getStars(book.rating)">
+                            <span *ngIf="star.filled">★</span>
+                            <span *ngIf="!star.filled">☆</span>
+                        </ng-container>
+                    </p>
+                    <p [ngClass]="{ 'out-of-stock': book.stock === 0 }">
+                        <span class="stock">{{ book.stock > 0 ? 'Stock: ' + book.stock : 'Out of Stock' }}</span>
+                    </p>
+                    <p>ISBN: {{ book.isbn }}</p>
+                    <h3 >Price: <span class="price">{{ book.price | currency:'INR' }}</span></h3>
+                </div>
+                <div>
+                    <div class="quantity">
+                        <h3></h3>
+                        <div>
+                            <button class="counter-btn" (click)="decreaseQuantity()" [disabled]="quantity <= 1"> - </button>
+                            <span id="counter-value">{{ quantity }}</span>
+                            <button class="counter-btn" (click)="increaseQuantity()" [disabled]="quantity >= book.stock"> + </button>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn btn-success" (click)="BuyNow()" [disabled]="book.stock === 0">BUY NOW</button>
+                        <button class="btn cart" (click)="addToCart()" [disabled]="book.stock === 0">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="titles">
+            <h3>Description</h3>
+            <p>{{ book.description }}</p>
+        </div>
+
+        <h3 class="title">Reviews & Ratings</h3>
+
+        <div class="feedback">
+            <div class="book-rating">
+                <div>
+                    <h1>{{ book.rating }}</h1>
+                    <h6>Book Rating</h6>
+                </div>
+                <p class="rating">
+                    <ng-container *ngFor="let star of getStars(book.rating)">
+                        <span *ngIf="star.filled">★</span>
+                        <span *ngIf="!star.filled">☆</span>
+                    </ng-container>
+                </p>
+            </div>
+
+            <div class="book-rating-bars">
+                <div class="d-flex align-items-center justify-content-center">
+                    <ng-container *ngFor="let star of getStars(5)">
+                        <i class="fa" [ngClass]="star" style="color:#FFDF00"></i>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <hr class="mt-4">
+
+        <div class="reviews">
+            <div *ngIf="isCustomer" class="review-container">
+                <h5>Leave a Review</h5>
+                <div class="feedback-section">
+                  <textarea
+                    id="feedback"
+                    [(ngModel)]="feedback"
+                    rows="2"
+                    placeholder="Write your feedback here"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': showErrors && !feedback }"
+                  ></textarea>
+                  <div *ngIf="showErrors && !feedback" class="text-danger">
+                    Feedback is required.
+                  </div>
+                </div>
+                <div class="rating-section">
+                  <div class="W-100">
+                    <div class="stars">
+                        <span *ngFor="let star of [1, 2, 3, 4, 5]" (click)="setRating(star)">
+                          <span *ngIf="rating >= star">★</span>
+                          <span *ngIf="rating < star">☆</span>
+                        </span>
+                    </div>
+                  </div>
+                  <div class="review-button">
+                    <button class="button btn-info" (click)="submitReview()">Submit Review</button>
+                  </div>
+                </div>
+                <div *ngIf="showErrors && rating === 0" class="text-danger">
+                    Rating is required.
+                </div>
+              </div>              
+              <!-- Alert message for successful submission or errors -->
+              <div *ngIf="alertMessage" class="alert alert-success mt-3">
+                {{ alertMessage }}
+              </div>
+              <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                {{ errorMessage }}
+              </div>
+              
+
+            <hr class="mt-3 mb-2">
+            <div class="comments">
+                <ul>
+                    <li *ngFor="let review of reviews" class="mt-1">
+                        <div class="review-top">
+                            <div class="ms-1">
+                                <h5>{{ review.username | titlecase }}</h5>
+                            </div>
+                            <small>{{ review.created_at}}</small>
+                        </div>
+                        <div class="review-body">
+                            <p class="rating">
+                                <ng-container *ngFor="let star of getStars(review.rating)">
+                                    <span *ngIf="star.filled">★</span>
+                                    <span *ngIf="!star.filled">☆</span>
+                                </ng-container>
+                            </p>
+                            <p>{{ review.comment }}</p> 
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <p>Loading book details...</p>
+</ng-template>
+
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+<app-footer></app-footer>

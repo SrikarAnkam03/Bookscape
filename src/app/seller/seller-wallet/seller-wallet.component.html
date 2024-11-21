@@ -1,0 +1,100 @@
+<app-seller-header></app-seller-header>
+
+<div class="body" >
+  <div class="container">
+    <div class="wallet-card">
+      <div class="wallet-header">
+        <h2>Wallet</h2>
+      </div>
+      <div class="wallet-body">
+        <div class="wallet-details">
+          <div class="wallet-info">
+            <p><strong>Balance</strong> <br> <span id="profileEmail">{{ balance | currency: 'INR' }}</span></p>
+            <br>
+            <div class="buttons">
+              <button class="edit-btn" (click)="openDepositModal()">Deposit</button>
+              <button class="edit-btn" (click)="openWithdrawModal()">Withdraw</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wallet-card">
+      <div class="wallet-header">
+        <h2>Transactions</h2>
+      </div>
+      <div class="transactions">
+        <div class="table-wrapper">
+          <table class="responsive-table">
+            <thead id="bookHeaders">
+              <tr>
+                <th>Transaction Id</th>
+                <!-- <th>Acount Name</th> -->
+                <th>Credit/debit</th>
+                <th>Amount</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="transactions.length > 0">
+              <tr *ngFor="let transaction of transactions">
+                <td>{{ transaction.transaction_id }}</td>
+                <!-- <td>{{ transaction.account_name }}</td> -->
+                <td>{{ transaction.transaction_type }}</td>
+                <td>{{ transaction.amount | currency: 'INR' }}</td>
+                <td>{{ transaction.created_at | date: 'short' }}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="transactions.length === 0">
+              <tr>
+                <td></td>
+                <td style="text-align: center; height: 30vh;">No Transactions Available</td>
+              </tr>
+            </tbody>          
+          </table>
+        </div>
+      </div>
+      <div class="pagination-controls">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deposit Modal -->
+<div *ngIf="depositmodal" class="modal" id="depositModal">
+  <div class="modal-content">
+    <div class="title-close">
+      <h2>Deposit Money</h2>
+      <span class="close" (click)="closeModal('deposit')">&times;</span>
+    </div>
+    <input 
+      class="input" 
+      [(ngModel)]="depositAmount" 
+      placeholder="Enter amount" 
+      min="0" 
+      (input)="onDepositInput($event)"
+      (keydown)="preventNonNumeric($event)" required/>
+    <button (click)="deposit()" class="btn edit-btn">Submit</button>
+  </div>
+</div>
+
+
+  <!-- Withdraw Modal -->
+<div *ngIf="withdrawmodal" class="modal" id="withdrawModal">
+  <div class="modal-content">
+    <div class="title-close">
+      <h2>Withdraw Money</h2>
+      <span class="close" (click)="closeModal('withdraw')">&times;</span>
+    </div>
+    <input 
+      class="input" 
+      [(ngModel)]="withdrawAmount" 
+      placeholder="Enter amount" 
+      min="0" 
+      (input)="onWithdrawInput($event)"
+      (keydown)="preventNonNumeric($event)" required/>
+    <button (click)="withdraw()" class="btn edit-btn">Submit</button>
+  </div>
+</div>
+</div>

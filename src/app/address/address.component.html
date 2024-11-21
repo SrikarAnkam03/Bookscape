@@ -1,0 +1,118 @@
+<head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    
+</head>
+<app-navbar></app-navbar>
+<body>
+    <div class="address-container">
+        <div class="add-address-container">
+            <h1>Address</h1>
+            <button class="add-address" (click)="openAddModal()">Add Address</button>           
+        </div>
+        <div *ngIf="addresses.length > 0; else noAddresses">
+            <div *ngFor="let address of addresses" class="address-item">
+                <div class="address-content">
+                    <h2>{{ address.address_type | uppercase }}</h2>
+                    <p><span class="address-text">Recipient Name</span><br>{{ address.recipient_name }}</p>
+                    <p><span class="address-text">Address</span><br>{{ address.address }}</p>
+                    <div class="buttons">
+                        <button class="btn edit" (click)="openEditModal(address.address_id)">Edit</button>
+                        <button class="btn btn-secondary red" (click)="openRemoveModal(address.address_id)">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #noAddresses>
+            <p class="noAddresses text-center">No Addresses available. Please add a New Address.</p>
+        </ng-template>
+
+        <div *ngIf="isEditModal" class="modal">
+            <div class="modal-content">
+                <span (click)="closeEditModal()" class="close">&times;</span>
+            </div>
+        </div>
+
+        <!-- Modal for Adding Address -->
+        <div *ngIf="isAddModal" class="modal">
+            <div class="modal-content">
+                <div class="close-modal">
+                    <h4>Add New Address</h4>
+                    <button type="button" class="btn-close" (click)="closeAddModal()"></button>
+                  </div>                <form (ngSubmit)="addAddress()">
+                    <input type="text" placeholder="Enter Recipient Name" id="recipient_name" [(ngModel)]="newAddress.recipient_name" name="recipient_name" required>
+                    <textarea type="text" placeholder="Enter the Address" id="address" [(ngModel)]="newAddress.address" name="address" required></textarea>
+                    <div class="form-group">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn address-type" (click)="logAddressType('Home')"
+                                   [class.active]="newAddress.address_type === 'Home'">
+                                <input type="radio"  name="address_type" [(ngModel)]="newAddress.address_type" value="Home" (click)="logAddress('Home')"> HOME
+                            </label>
+                            <label class="btn address-type" (click)="logAddressType('Office')"
+                                   [class.active]="newAddress.address_type === 'Office'">
+                                <input type="radio" name="address_type" [(ngModel)]="newAddress.address_type" value="Office" (click)="logAddress('Office')"> OFFICE
+                            </label>
+                            <label class="btn address-type" (click)="logAddressType('Other')"
+                                   [class.active]="newAddress.address_type === 'Other'">
+                                <input type="radio" name="address_type" [(ngModel)]="newAddress.address_type" value="Other" (click)="logAddress('Other')"> OTHER
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="submit" class="modal-button green">Add Address</button>
+                        <button type="button" class="modal-button remove" (click)="closeAddModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Address Modal -->
+        <div *ngIf="isEditModal" class="modal">
+            <div class="modal-content">
+                <div class="close-modal">
+                    <h4>Edit Address</h4>
+                    <button type="button" class="btn-close" (click)="closeEditModal()"></button>
+                </div>
+                <form (ngSubmit)="updateAddress()">
+                    <input type="text" placeholder="Enter Recipient Name" id="recipient_name" [(ngModel)]="editAddressData.recipient_name" name="recipient_name" required>
+                    <textarea placeholder="Enter the Address" id="address" [(ngModel)]="editAddressData.address" name="address" required></textarea>
+                    <div class="form-group">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn address-type" (click)="logAddress('Home')" [class.active]="editAddressData.address_type === 'Home'">
+                                <input type="radio" name="address_type" [(ngModel)]="editAddressData.address_type" value="Home" (click)="logAddress('Home')"> HOME
+                            </label>
+                            <label class="btn address-type" (click)="logAddress('Office')" [class.active]="editAddressData.address_type === 'Office'">
+                                <input type="radio" name="address_type" [(ngModel)]="editAddressData.address_type" value="Office" (click)="logAddress('Office')"> OFFICE
+                            </label>
+                            <label class="btn address-type" (click)="logAddress('Other')" [class.active]="editAddressData.address_type === 'Other'">
+                                <input type="radio" name="address_type" [(ngModel)]="editAddressData.address_type" value="Other" (click)="logAddress('Other')"> OTHER
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="submit" class="modal-button green">Update</button>
+                        <button type="button" class="modal-button remove" (click)="closeEditModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Modal for confirming deletion -->
+        <div *ngIf="isDeleteModal" class="modal">
+            <div class="modal-content deletemodal">
+                <div class="close-modal">
+                    <h4>Are you sure you want to delete this address?</h4>
+                    <button type="button" class="btn-close" (click)="closeModal()"></button>
+                </div>                <div class="modal-buttons">
+                    <button class="modal-button red" (click)="deleteAddress()">Yes</button>
+                    <button class="modal-button remove" (click)="closeModal()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<app-footer></app-footer>

@@ -1,0 +1,166 @@
+<div class="top">
+  <div>
+    <a routerLink="/admin"><label class="logo"><img class="logo-icon" src="../assets/images/booklogo_3.png" alt="Logo"/></label></a> 
+  </div>
+  <div class="logout">
+    <a routerLink="/login" class="logout-text" (click)="logout()"> Logout</a>
+  </div>
+</div>
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Home</li>
+  </ol>
+</nav>
+
+<div class="dashboard">
+  <div class="dash-content">
+    <div class="boxes">
+      <div class="box" [ngClass]="{ 'selected': selectedBox === 'sellers' }" (click)="fetchData('sellers')">
+        <i class="fa-solid fa-user p-4"></i>
+        <span class="text">Total Sellers</span>
+        <span class="number">{{ sellers.length }}</span>
+      </div>
+
+      <div 
+        class="box" [ngClass]="{ 'selected': selectedBox === 'users' }" (click)="fetchData('users')">
+        <i class="fa-regular fa-user p-4"></i>
+        <span class="text">Total Users</span>
+        <span class="number">{{ users.length }}</span>
+      </div>
+
+      <div 
+        class="box" [ngClass]="{ 'selected': selectedBox === 'books' }" (click)="fetchData('books')">
+        <i class="fa-solid fa-book p-4"></i>
+        <span class="text">Total Books</span>
+        <span class="number">{{ books.length }}</span>
+      </div>
+
+      <div class="box" [ngClass]="{ 'selected': selectedBox === 'orders' }" (click)="fetchData('orders')">
+        <i class="fa-solid fa-cart-shopping p-4"></i>
+        <span class="text">Total Orders</span>
+        <span class="number">{{ orders.length }}</span>
+      </div>
+    </div>
+
+    <div class="activity-data"> 
+      <div class="table-wrapper">
+        <table class="responsive-table">
+          <thead id="userHeaders" *ngIf="showUserHeaders">
+            <tr>
+              <th><div class="d-flex flex-row justify-content-between">Username<i class="uil uil-sort ps-3" (click)="sortTable('username')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Email<i class="uil uil-sort ps-3" (click)="sortTable('email')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Phone<i class="uil uil-sort ps-3" (click)="sortTable('phone_number')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Created At<i class="uil uil-sort ps-3" (click)="sortTable('created_at')"></i></div></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="showUserHeaders">
+            <tr *ngFor="let user of getPaginatedData(users)" class="select">
+              <td>{{ user.username || 'N/A' }}</td>
+              <td>{{ user.email || 'N/A' }}</td>
+              <td>{{ user.phone_number || 'N/A' }}</td>
+              <td>{{ user.created_at ? (user.created_at | date) : 'N/A' }}</td>
+            </tr>
+          </tbody>
+
+          <thead id="bookHeaders" *ngIf="showBookHeaders">
+            <tr>
+              <th><div class="d-flex flex-row justify-content-between">Title<i class="uil uil-sort ps-3" (click)="sortTable('title')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Author<i class="uil uil-sort ps-3" (click)="sortTable('author_name')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Genre<i class="uil uil-sort ps-3" (click)="sortTable('genre_name')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">price<i class="uil uil-sort ps-3" (click)="sortTable('price')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Stock<i class="uil uil-sort ps-3" (click)="sortTable('stock')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Published Date<i class="uil uil-sort ps-3" (click)="sortTable('Published_date')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Seller<i class="uil uil-sort ps-3" (click)="sortTable('seller')"></i></div></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="showBookHeaders">
+            <tr *ngFor="let book of getPaginatedData(books)" class="select" (click)="navigateToBook(book.title)">
+              <td>{{ book.title || 'N/A' }}</td>
+              <td>{{ book.author_name || 'N/A' }}</td>
+              <td>{{ book.genre_name || 'N/A' }}</td>
+              <td>{{ book.price || 'N/A' }}</td>
+              <td>{{ book.stock || 'N/A' }}</td>
+              <td>{{ book.published_date ? (book.published_date | date) : 'N/A' }}</td>
+              <td>{{ book.seller || 'N/A' }}</td>
+            </tr>
+          </tbody>
+
+          <thead id="orderHeaders" *ngIf="showOrderHeaders">
+            <tr>
+              <th><div class="d-flex flex-row justify-content-between">Order ID<i class="uil uil-sort ps-3" (click)="sortTable('order_id')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Username<i class="uil uil-sort ps-3" (click)="sortTable('username')"></i></div></th>
+              <!-- <th><div class="d-flex flex-row justify-content-between">Address<i class="uil uil-sort ps-3" (click)="sortTable('address')"></i></div></th> -->
+              <th><div class="d-flex flex-row justify-content-between">Books<i class="uil uil-sort ps-3" (click)="sortTable('books')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Total Amount<i class="uil uil-sort ps-3" (click)="sortTable('total_amount')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Order Date<i class="uil uil-sort ps-3" (click)="sortTable('order_date')"></i></div></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="showOrderHeaders">
+            <tr *ngFor="let order of getPaginatedData(orders)" class="select" (click)="navigateToOrder(order.order_id)">
+              <td>{{ order.order_id || 'N/A' }}</td>
+              <td>{{ order.username || 'N/A' }}</td>
+              <!-- <td>{{ order.address || 'N/A' }}</td> -->
+              <!-- <td>{{ order.title || 'N/A'}}</td> -->
+              <td>{{ order.items.length || 'N/A'}}</td>
+              <td>{{ order.total_amount | currency:'INR' || 'N/A' }}</td>
+              <td>{{(order.order_date | date)  || 'N/A' }}</td>
+            </tr>
+          </tbody>          
+
+          <thead id="sellerHeaders" *ngIf="showSellerHeaders">
+            <tr>
+              <th><div class="d-flex flex-row justify-content-between">Username<i class="uil uil-sort ps-3" (click)="sortTable('username')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Email<i class="uil uil-sort ps-3" (click)="sortTable('email')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Phone<i class="uil uil-sort ps-3" (click)="sortTable('phone_number')"></i></div></th>
+              <th><div class="d-flex flex-row justify-content-between">Created At<i class="uil uil-sort ps-3" (click)="sortTable('created_at')"></i></div></th>
+              <th class="text-center">Remove</th>
+              <th class="text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="showSellerHeaders">
+            <tr *ngFor="let seller of getPaginatedData(sellers)" class="select">
+              <td (click)="navigateToDashboard(seller.username)">{{ seller.username || 'N/A' }}</td>
+              <td (click)="navigateToDashboard(seller.username)">{{ seller.email || 'N/A' }}</td>
+              <td (click)="navigateToDashboard(seller.username)">{{ seller.phone_number || 'N/A' }}</td>
+              <td (click)="navigateToDashboard(seller.username)">{{ seller.created_at ? (seller.created_at | date) : 'N/A' }}</td>
+              <td class="delete text-center" style="font-size: 18px;" (click)="openRemoveModal(seller)" ><i class="uil uil-trash"></i></td>
+              <td class="approve text-center" style="font-size: 20px;" [ngStyle]="{ 'background-color': seller.hoverColor}" (click)="openStatusModal(seller)" (mouseover)="onMouseOver(seller)" (mouseleave)="onMouseLeave(seller)" [innerHTML]="seller.hoverText"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="pagination-controls" *ngIf="totalPages > 1">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+      <button *ngFor="let page of generatePageNumbers()" [class.active]="page === currentPage" (click)="changePage(page)">{{ page }}</button>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isDeleteModal"class="modal">
+  <div class="modal-content deletemodal">
+    <div class="modal-close">
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+      <h4>Do you really want to delete {{seller.username}}?</h4>
+      <div class="modal-buttons">
+          <button class="modal-button red" (click)="deleteSeller()">Yes</button>
+          <button class="modal-button no" (click)="closeModal()">No</button>
+      </div>
+  </div>
+</div>
+
+<div *ngIf="isStatusModal"class="modal">
+  <div class="modal-content deletemodal">
+    <div class="modal-close">
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+      <h4>Do you want to modify {{seller.username}}'s status?</h4>
+      <div class="modal-buttons">
+          <button class="modal-button edit" (click)="toggleApproval()">Yes</button>
+          <button class="modal-button no" (click)="closeModal()">No</button>
+      </div>
+  </div>
+</div>

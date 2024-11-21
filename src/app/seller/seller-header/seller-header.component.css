@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+*{
+  margin: 0%;
+}
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px #0000001a;
+    align-items: center;
+    background-color: #2C3E50; 
+    position: fixed;
+    width: 100%;
+    border-radius: 0%;
+    color: #ECF0F1; 
+    padding: 10px 15px;
+    z-index: 1000; 
+  }
+  
+  .logo img {
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    text-transform: uppercase;
+    padding: 0px;
+  }
+  
+  .nav-links li {
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0 20px;
+  }
+  
+  .nav-links a {
+    color: #ECF0F1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #1ABC9C; 
+  }
+
+  .active-link {
+    color: #1ABC9C;
+  }
+  
+  .nav-links a.active-link {
+    border-bottom: 2px solid #1ABC9C;
+  }
+  
+  .sidebar a.active-link {
+    font-weight: bold;
+    color: #1ABC9C;
+  }
+  
+  .hamburger {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .hamburger span {
+    display: flex;
+    align-items: end;
+    align-content: center;
+    width: 30px;
+    height: 5px;
+    margin: 5px auto;
+    background-color: #ECF0F1; 
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #34495E;
+    color: #ECF0F1;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    z-index: 999; 
+  }
+  
+  .sidebar.open {
+    display: block;
+    transform: translateX(0);
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    margin-top: 80px;
+    padding: 20px 0; 
+  }
+  
+  .sidebar li {
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+  }
+  
+  .sidebar a {
+    text-decoration: none;
+    color: #ECF0F1; 
+    transition: color 0.3s ease;
+  }
+  
+  .sidebar a:hover {
+    color: #1ABC9C; 
+  }
+  
+  @media (max-width: 700px) {
+    .navbar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-right: 0px;
+      padding-left: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+      width: 100%;
+    }
+    .logo img {
+      height: 30px; 
+    }
+    .nav-links {
+      display: none; 
+    }
+  
+    .hamburger {
+      display: block; 
+    }
+  
+    .sidebar {
+      display: block;
+    }
+  
+    .sidebar.open {
+      display: block;
+    }
+  }
+  

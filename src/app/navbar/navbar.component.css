@@ -1,0 +1,298 @@
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px #0000001a;
+  border-bottom: 0.1rem solid #f5fcff;
+  align-items: center;
+  background-color: #81c8dd; 
+  position:fixed;
+  border-radius: 0%;
+  color: #ECF0F1; 
+  padding: 10px 15px;
+  width: 100%;
+  z-index: 1000; 
+}
+
+.badge {
+  top: 18px;
+  right: 190px;
+  height: 5px;
+  display: flex;
+  width: 10px; 
+  color: #005288; 
+  font-size: 8px;
+  padding: 8px 8px;
+  border-radius: 50%;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff; 
+}
+
+.logo-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.logo-container img {
+  padding: 5px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.logo-default {
+  display: block;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.logo-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.logo-container.active .logo-default {
+  opacity: 0;
+}
+
+.logo-active:hover {
+  opacity: 1;
+}
+
+
+.logo-container.active .logo-active {
+  opacity: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  text-transform: uppercase;
+  padding: 0px;
+}
+
+.nav-links li {
+  font-weight: 500;
+  font-size: 15px;
+  margin-left: 30px;
+}
+
+.fas{
+  font-size: 15px;
+  margin-right: 5px;
+}
+
+.fa-caret-down{
+  margin-left: 0px;
+  font-size: 20px;
+}
+
+.dropdown {
+  position: relative;
+  padding: 10px 0px;
+  padding-right: 10px;
+}
+
+.dropbtn {
+  color: white;
+  align-items: center;
+  font-size: 15px;
+  border: none;
+}
+
+.fa-user-circle{
+  font-size: 30px;
+}
+
+.dropdown-content {
+  box-shadow: 0px 8px 16px #00000033;
+  background-color: #81c8dd;
+  align-items: center;
+  position:absolute;
+  padding-bottom: 20px;
+  width: 220px;
+  display: none;
+  right: -15px;
+  top: 63px;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-content li {
+  display: block;
+  padding: 10px 25%;
+  margin: 0px;
+}
+
+.dropdown-content i{
+  padding: 0px 10px;
+}
+
+.dropdown-content .fas{
+  padding-left: 15px;
+  padding-right: 10px;
+  margin: 0px;
+}
+
+.dropdown-content a{
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+
+.dropdown-content li a:hover{
+  color: #005288;
+}
+
+.dropdown-content li a.active{
+  color: #005288;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  color: #005288;
+  .badge{
+    background-color: #005288;
+    color: #fff;
+  }
+}
+
+
+.nav-links a.active {
+  font-weight: bold;
+  color: #005288;
+}
+
+.sidebar a.active {
+  font-weight: bold;
+  color: #005288;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.hamburger span {
+  width: 30px;
+  height: 4px;
+  border-radius: 5px;
+  display: flex;
+  align-items: end;
+  margin: 5px auto;
+  background-color: #ffffff; 
+  transition: all 0.3s ease;
+}
+
+.sidebar {
+  top: 0;
+  width: 250px;
+  height: 100%;
+  display: none;
+  position: fixed;
+  color: #ECF0F1;
+  background-color: #71b9cf;
+  transform: translateX(100%);
+  right: 0;
+  box-shadow: 2px 0 5px #00000080;
+  transition: transform 0.3s ease-in-out;
+  z-index: 900; 
+}
+
+.sidebar.open {
+  display: block;
+  transform: translateX(0);
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-top: 80px;
+  padding: 20px 0; 
+}
+
+.sidebar li {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #ffffff; 
+  transition: color 0.3s ease;
+}
+
+.sidebar a:hover {
+  color: #005288;
+}
+
+i{
+  font-size: 20px;
+}
+
+#check {
+  display: none;
+}
+
+
+@media (max-width: 700px) {
+  .top {
+    width: 100%;
+  }
+  .logo img {
+    height: 30px; 
+  }
+  .nav-links {
+    display: none; 
+  }
+
+  .hamburger {
+    display: block; 
+  }
+
+  .sidebar {
+    display: block;
+    width: 40%;
+    box-shadow: none;
+
+  }
+
+  .sidebar.open {
+    display: block;
+    box-shadow: 2px 0 5px #00000080;
+  }
+}
+
+@media (max-width: 400px){
+  .sidebar{
+    width: 100%;
+  }
+}

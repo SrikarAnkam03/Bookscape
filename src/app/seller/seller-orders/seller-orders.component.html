@@ -1,0 +1,41 @@
+<app-seller-header></app-seller-header>
+
+<div class="dashboard">
+  <div class="dash-content">
+    <div class="activity">
+      <div class="title-button">
+        <div class="title">
+          <span class="text">Orders</span>
+        </div>
+      </div>
+      <div class="activity-data table-wrapper">
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Book</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Ordered Date</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let order of paginatedOrders">
+            <tr *ngFor="let item of order.items">
+              <td>{{ item.order_item_id }}</td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.price | currency: 'INR' }}</td>
+              <td>{{ order.order_date | date }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+      <!-- Pagination Controls -->
+      <div class="pagination-controls">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+      </div>
+</div>

@@ -1,0 +1,84 @@
+<app-header></app-header>
+<body>
+  <div class="wrapper">
+    <h2>User Registration</h2>
+  
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <!-- Username Field -->
+      <div class="input-box">
+        <input type="text" formControlName="username" placeholder="Enter username" required>
+        <div *ngIf="registrationForm.get('username')?.touched && registrationForm.get('username')?.invalid" class="error-message">
+          <small *ngIf="registrationForm.get('username')?.errors?.['required']">Username is required.</small>
+          <small *ngIf="registrationForm.get('username')?.errors?.['minlength']">Username must be at least 3 characters long.</small>
+          <small *ngIf="registrationForm.get('username')?.errors?.['maxlength']">Username cannot exceed 20 characters.</small>
+        </div>
+      </div>
+  
+      <!-- Email Field -->
+      <div class="input-box">
+        <input type="email" formControlName="email" placeholder="Enter your email" required>
+        <div *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid" class="error-message">
+          <small *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="registrationForm.get('email')?.errors?.['email']">Enter a valid email address.</small>
+        </div>
+      </div>
+  
+      <!-- Phone Field -->
+      <div class="input-box">
+        <input type="tel" formControlName="phone" maxlength="10" placeholder="Enter your mobile number" (keypress)="validateNumberInput($event)">
+        <div *ngIf="registrationForm.get('phone')?.touched && registrationForm.get('phone')?.invalid" class="error-message">
+          <small *ngIf="registrationForm.get('phone')?.errors?.['required']">Phone number is required.</small>
+          <small *ngIf="registrationForm.get('phone')?.errors?.['pattern']">Enter a valid 10-digit phone number.</small>
+        </div>
+      </div>
+  
+      <!-- Password Field -->
+      <div class="input-box">
+        <input type="password" formControlName="password" placeholder="Create password" max="8" required>
+        <div *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.invalid" class="error-message">
+          <small *ngIf="registrationForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="registrationForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+      <!-- Confirm Password Field -->
+      <div class="input-box">
+        <input type="password" formControlName="confirmPassword" placeholder="Confirm password" required>
+        <div *ngIf="registrationForm.get('confirmPassword')?.touched &&  registrationForm.get('confirmPassword')?.invalid"  class="error-message">
+          <small *ngIf="registrationForm.get('confirmPassword')?.errors?.['required']">Please confirm your password.</small>
+          <small *ngIf="registrationForm.get('confirmPassword')?.errors?.['passwordMismatch']">Passwords do not match.</small>
+        </div>
+      </div>
+  
+      <div>
+        <button class="button" type="submit">Sign Up</button>
+      </div>
+    </form>
+    <div class="text">
+      <h3>Already have an account? <a routerLink="/login">Login now</a></h3>
+    </div>
+  
+    <!-- Success and Error Messages -->
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </div>
+</body>
+<app-footer></app-footer>
+
+<!-- OTP Modal -->
+<div *ngIf="isOtpSent" class="modal">
+  <div class="modal-content">
+    <div class="close">
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <h3>Enter OTP</h3>
+    <form [formGroup]="otpForm" (ngSubmit)="onOtpSubmit()">
+      <input type="text" formControlName="otp" placeholder="Enter OTP" maxlength="6">
+      <div class="buttons">
+        <button type="submit" class="btn">Verify OTP</button>
+      </div>
+      <p>OTP expires in: {{ displayTime }}</p>
+      <div *ngIf="otpErrorMessage" class="error-message">{{ otpErrorMessage }}</div>
+    </form>
+  </div>
+</div>
+  

@@ -1,0 +1,85 @@
+<div class="top">
+  <div>
+    <a routerLink="/admin"><label class="logo"><img class="logo-icon" src="../assets/images/booklogo_3.png" alt="Logo"/></label></a> 
+  </div>
+  <div class="logout">
+    <a routerLink="/login" class="logout-text">Logout</a>
+  </div>
+</div>
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page"><a routerLink="/admin">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Seller</li>
+  </ol>
+</nav>
+
+<div class="activity-data"> 
+  <div *ngIf="sellerDetails" class="seller-details">
+    <h3>Seller Details</h3>
+    <div class="details">
+      <h4 class="headers">Username</h4>
+      <h4 class="data">{{ sellerDetails.username | titlecase }}</h4>
+    </div>
+    <div class="details">
+      <h4 class="headers">Email</h4>
+      <h4 class="data">{{ sellerDetails.email }}</h4>
+    </div>
+    <div class="details">
+      <h4 class="headers">Phone Number</h4>
+      <h4 class="data">{{ sellerDetails.phone_number }}</h4>
+    </div>
+    <div class="details">
+      <h4 class="headers">Joined</h4>
+      <h4 class="data">{{ sellerDetails.created_at }}</h4>
+    </div>
+  </div>
+
+  <div *ngIf="books && books.length === 0" class="table-wrapper">
+    <table class="responsive-table-nobooks">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Published Date</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="no-books-message">
+      <h4>No books available for this seller.</h4>
+    </div>
+  </div>
+
+  <div class="table-wrapper" *ngIf="books && books.length > 0">
+    <table class="responsive-table">
+      <thead id="bookHeaders" *ngIf="showBookHeaders">
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Published Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of paginatedBooks" class="select">
+          <td>{{ book.title || 'N/A' }}</td>
+          <td>{{ book.author_name || 'N/A' }}</td>
+          <td>{{ book.genre_name || 'N/A' }}</td>
+          <td>{{ book.price || 'N/A' }}</td>
+          <td>{{ book.stock || 'N/A' }}</td>
+          <td>{{ book.published_date ? (book.published_date | date) : 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination-controls">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
