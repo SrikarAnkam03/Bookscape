@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookservicesService } from '../../services/bookservices.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,12 +10,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class DashboardComponent implements OnInit {
 
-    isSidebarClosed = false;
-    alertMessage: string | null = null;
-    userName: string | null = localStorage.getItem('username');
+  isSidebarClosed = false;
+  alertMessage: string | null = null;
+  userName: string | null = localStorage.getItem('username');
 
-
-  deletebook = { book_id: '', title: '' };  
+  deletebook = { book_id: '', title: '' };
   updatebook: any = {
     bookId: '',
     currentTitle: '',
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
     'Fantasy',
     'Historical Fiction',
     'Horror',
-    'Biography' 
+    'Biography'
   ];
 
   errorMessage: string = '';
@@ -63,8 +63,7 @@ export class DashboardComponent implements OnInit {
   isUpdateBookModalOpen = false;
   isAddBookModalOpen = false;
 
-  constructor(private bookService: BookservicesService,private fb: FormBuilder) {
-  }
+  constructor(private bookService: BookservicesService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.fetchBooks();
@@ -76,16 +75,15 @@ export class DashboardComponent implements OnInit {
 
   openDeleteBookModal(bookId: string, title: string) {
     this.deletebook.title = title;
-    this.deletebook.book_id = bookId; 
+    this.deletebook.book_id = bookId;
     this.isDeleteBookModalOpen = true;
   }
-  
+
   openUpdateBookModal(title: string) {
     this.isUpdateBookModalOpen = true;
     this.updatebook.title = title;
-    this.fetchBookDetails(title); 
+    this.fetchBookDetails(title);
   }
-  
 
   closeAddModal() {
     this.isAddBookModalOpen = false;
@@ -145,28 +143,35 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  
+
   deleteBook(): void {
     if (!this.deletebook.book_id) {
-        this.errorMessage = 'Book ID is required.';
-        return;
+      this.errorMessage = 'Book ID is required.';
+      return;
     }
 
-    this.bookService.deleteBook(this.deletebook.book_id ).subscribe(
-        (response: any) => {
-            if (response.message === 'Book Deleted successfully') {
-                this.fetchBooks(); // Refresh the list of books
-                this.closeDeleteModal(); // Close the delete modal
-            }
-        },
-        (error: any) => { 
-            // Handle different error statuses from the backend
-            if (error?.status === 404 || error?.status === 400) {
-                this.errorMessage = 'Failed: ' + error.error.message;
-            } else {
-                this.errorMessage = 'An error occurred during operation. Please try again.';
-            }
+    this.bookService.deleteBook(this.deletebook.book_id).subscribe(
+      (response: any) => {
+        if (response.message === 'Book Deleted successfully') {
+          Swal.fire({
+            title: response.message,
+            color: '#c90000',
+            icon: 'success',
+            confirmButtonColor: '#2C3E50',
+            confirmButtonText: 'Okay',
+            showCloseButton: true
+          });
+          this.fetchBooks();
+          this.closeDeleteModal();
         }
+      },
+      (error: any) => {
+        if (error?.status === 404 || error?.status === 400) {
+          this.errorMessage = 'Failed: ' + error.error.message;
+        } else {
+          this.errorMessage = 'An error occurred during operation. Please try again.';
+        }
+      }
     );
   }
 
@@ -176,25 +181,22 @@ export class DashboardComponent implements OnInit {
 
   addBook() {
     const formData = new FormData();
-  
-    // Validate required fields
-    if (!this.newBook.title || !this.newBook.author_name || !this.newBook.genre_name || 
-        this.newBook.price === undefined || this.newBook.stock === undefined || 
+
+    if (!this.newBook.title || !this.newBook.author_name || !this.newBook.genre_name ||
+        this.newBook.price === undefined || this.newBook.stock === undefined ||
         !this.newBook.published_date || !this.newBook.description || !this.newBook.isbn ||
         this.newBook.rating === undefined) {
       this.errorMessage = 'Please fill in all fields before submitting.';
       return;
     }
-  
-    // Ensure a file is selected
+
     if (this.selectedFile) {
       formData.append('file', this.selectedFile, this.selectedFile.name);
     } else {
       this.errorMessage = 'Please select a file to upload.';
       return;
     }
-  
-    // Append other form data
+
     formData.append('title', this.newBook.title);
     formData.append('author_name', this.newBook.author_name);
     formData.append('genre_name', this.newBook.genre_name);
@@ -204,26 +206,30 @@ export class DashboardComponent implements OnInit {
     formData.append('description', this.newBook.description);
     formData.append('isbn', this.newBook.isbn);
     formData.append('rating', this.newBook.rating.toString());
-  
-    // Call the service to add the book
+
     this.bookService.addBook(formData).subscribe(
       (response) => {
         console.log('Book added successfully:', response);
-        this.fetchBooks();  // Refresh the books list
-  
-        // Reset form and state
+        this.fetchBooks();
+        Swal.fire({
+          title: 'Success!',
+          text: 'Book added successfully',
+          icon: 'success',
+          confirmButtonColor: '#2C3E50',
+          confirmButtonText: 'Okay',
+          showCloseButton: true
+
+        });
         this.closeAddModal();
-        this.newBook = { 
-          title: '', author_name: '', genre_name: '', price: null, 
-          stock: null, published_date: '', description: '', isbn: '', rating: null 
+        this.newBook = {
+          title: '', author_name: '', genre_name: '', price: null,
+          stock: null, published_date: '', description: '', isbn: '', rating: null
         };
         this.selectedFile = null;
-        this.errorMessage = '';  // Clear error message
+        this.errorMessage = '';
       },
       (error) => {
         console.error('Error adding book:', error);
-  
-        // Handle the error based on the response
         if (error.status === 400) {
           this.errorMessage = 'Please check the form data and try again.';
         } else if (error.status === 500) {
@@ -234,39 +240,40 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  
+
   updateBook(): void {
     const updatedFields: any = {};
-  
-    // Check if any fields are provided for updating
+
     if (this.updatebook.title) {
       updatedFields.title = this.updatebook.title;
     }
-  
-    // Loop through each field and check if the field has been changed or is not empty
+
     Object.keys(this.updatebook).forEach(key => {
       if (this.updatebook[key] !== '' && this.updatebook[key] !== null && this.updatebook[key] !== undefined) {
         updatedFields[key] = this.updatebook[key];
       }
     });
-  
-    // Validate that at least one field is updated
+
     if (Object.keys(updatedFields).length === 0) {
       this.errorMessage = 'No changes made. Please update at least one field.';
       return;
     }
-  
-    // Call the updateBook method in the service
+
     this.bookService.updateBook(updatedFields).subscribe(
       (response: any) => {
-        alert(response.message);
+        Swal.fire({
+          title: response.message,
+          icon: 'success',
+          confirmButtonColor: '#2C3E50',
+          confirmButtonText: 'Okay',
+          showCloseButton: true
+        });
         if (response.message === 'Book updated successfully') {
-          this.fetchBooks(); // Refresh the list of books
-          this.closeUpdateModal(); // Close the update modal
+          this.fetchBooks();
+          this.closeUpdateModal();
         }
       },
       (error: any) => {
-        // Error handling for different HTTP status codes
         if (error?.status === 404) {
           this.errorMessage = 'Book not found. Please check the book ID and try again.';
         } else if (error?.status === 400) {
@@ -277,7 +284,7 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  
+
   updateBookTable(): void {
     const bookTableBody = document.querySelector('#listbooks') as HTMLTableSectionElement;
     bookTableBody.innerHTML = this.books.map(book => `

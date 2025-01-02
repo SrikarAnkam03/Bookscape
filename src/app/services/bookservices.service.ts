@@ -33,14 +33,14 @@ export class BookservicesService {
   // Fetch a single book
   book(): Observable<any> {
     return this.http.get(this.apiUrlBook, { headers: this.getAuthHeaders() }).pipe(
-      tap((data) => console.log('Fetched books:', data)),
+      tap((data) => console.log('Fetched book:', data)),
       catchError(this.handleError)
     );
   }
 
   // Fetch all books
   getBooks(): Observable<any> {
-    return this.http.get(this.apiUrlBooks, { headers: this.getAuthHeaders() }).pipe(
+    return this.http.get(this.apiUrlBooks+"/fetch", { headers: this.getAuthHeaders() }).pipe(
       tap((data) => console.log('Fetched books:', data)),
       catchError(this.handleError)  
     );

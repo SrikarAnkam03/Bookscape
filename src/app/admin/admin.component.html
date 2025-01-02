@@ -3,7 +3,7 @@
     <a routerLink="/admin"><label class="logo"><img class="logo-icon" src="../assets/images/booklogo_3.png" alt="Logo"/></label></a> 
   </div>
   <div class="logout">
-    <a routerLink="/login" class="logout-text" (click)="logout()"> Logout</a>
+    <a class="logout-text" (click)="logout()"> Logout</a>
   </div>
 </div>
 
@@ -90,7 +90,6 @@
             <tr>
               <th><div class="d-flex flex-row justify-content-between">Order ID<i class="uil uil-sort ps-3" (click)="sortTable('order_id')"></i></div></th>
               <th><div class="d-flex flex-row justify-content-between">Username<i class="uil uil-sort ps-3" (click)="sortTable('username')"></i></div></th>
-              <!-- <th><div class="d-flex flex-row justify-content-between">Address<i class="uil uil-sort ps-3" (click)="sortTable('address')"></i></div></th> -->
               <th><div class="d-flex flex-row justify-content-between">Books<i class="uil uil-sort ps-3" (click)="sortTable('books')"></i></div></th>
               <th><div class="d-flex flex-row justify-content-between">Total Amount<i class="uil uil-sort ps-3" (click)="sortTable('total_amount')"></i></div></th>
               <th><div class="d-flex flex-row justify-content-between">Order Date<i class="uil uil-sort ps-3" (click)="sortTable('order_date')"></i></div></th>
@@ -100,8 +99,6 @@
             <tr *ngFor="let order of getPaginatedData(orders)" class="select" (click)="navigateToOrder(order.order_id)">
               <td>{{ order.order_id || 'N/A' }}</td>
               <td>{{ order.username || 'N/A' }}</td>
-              <!-- <td>{{ order.address || 'N/A' }}</td> -->
-              <!-- <td>{{ order.title || 'N/A'}}</td> -->
               <td>{{ order.items.length || 'N/A'}}</td>
               <td>{{ order.total_amount | currency:'INR' || 'N/A' }}</td>
               <td>{{(order.order_date | date)  || 'N/A' }}</td>

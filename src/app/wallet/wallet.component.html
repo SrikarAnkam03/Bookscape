@@ -12,7 +12,7 @@
             <br>
             <div class="buttons">
               <button class="edit-btn" (click)="openDepositModal()">Deposit</button>
-              <button class="edit-btn" (click)="openWithdrawModal()">Withdraw</button>
+              <!-- <button class="edit-btn" (click)="openWithdrawModal()">Withdraw</button> -->
             </div>
           </div>
         </div>
@@ -64,8 +64,10 @@
   <div *ngIf="depositmodal" class="modal" id="depositModal">
     <div class="modal-content">
       <div class="title-close">
+        <div class="text-right">
+          <button type="button" class="btn-close" (click)="closeModal('deposit')"></button>
+        </div>
         <h2>Deposit Money</h2>
-        <span class="close" (click)="closeModal('deposit')">&times;</span>
       </div>
       <input 
         class="input" 
@@ -83,8 +85,10 @@
   <div *ngIf="withdrawmodal" class="modal" id="withdrawModal">
     <div class="modal-content">
       <div class="title-close">
+        <div class="text-right">
+          <button type="button" class="btn-close" (click)="closeModal('withdraw')"></button>
+        </div>
         <h2>Withdraw Money</h2>
-        <span class="close" (click)="closeModal('withdraw')">&times;</span>
       </div>
       <input 
         class="input" 

@@ -8,7 +8,6 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class SellerOrdersComponent implements OnInit {
   orders: any[] = [];
-  
   currentPage: number = 1;
   itemsPerPage: number = 5;
   paginatedOrders: any[] = [];
@@ -24,6 +23,7 @@ export class SellerOrdersComponent implements OnInit {
     this.orderService.getSellerOrders().subscribe(
       (response: any) => {
         this.orders = response.orders;
+        console.log(response)
         this.calculateTotalPages();
         this.updatePaginatedOrders();
         console.log(this.orders);

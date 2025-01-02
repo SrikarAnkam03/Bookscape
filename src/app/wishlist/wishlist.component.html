@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+<app-alert [message]="alertMessage"></app-alert>
 
 <div class="wishlistpage">
   <div *ngIf="wishlistItems.length > 0; else emptywishlist" class="wishlist"> 

@@ -56,7 +56,7 @@
 }
 
 .edit-btn {
-  background: #c7c7c7;
+  background: #81e9d4;
   color: #333;
   border: none;
   padding: 10px 20px;
@@ -67,22 +67,22 @@
 }
 
 .edit-btn:hover {
-  background: #3f3f3f;
+  background: #1ABC9C;
   color: #fff;
 }
 
 .change-button{
-  background-color: #c7c7c7;
   border: none;
   color: #333;
   font-size: 12px;
+  font-weight: 500;
   margin-top: 20px;
   padding: 10px 30px;
-  font-weight: 500;
+  background-color: #81e9d4;
 }
 
 .change-button:hover{
-  background-color: #333333;
+  background-color: #1ABC9C;
   color: #fff;
 }
 
@@ -117,7 +117,7 @@
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .form-group label {
@@ -135,8 +135,8 @@
 }
 
 button[type="submit"] {
-  background: #9b9b9b;
-  color: #000;
+  background: #81e9d4;
+  color: #333;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
@@ -145,7 +145,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background: #686868;
+  background: #1ABC9C;
   color: #fff;
 }
 
@@ -161,6 +161,7 @@ button[type="submit"]:hover {
 
 .error-message {
   color: red;
+  text-align: center;
   margin-top: 6px;
   font-size: 12px;
 }

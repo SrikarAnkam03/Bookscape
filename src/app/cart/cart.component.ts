@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CartservicesService } from '../services/cartservices.service';
 import { WalletService } from '../services/walletservices.service';
 import { OrderService } from '../services/order.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart',
@@ -14,15 +15,13 @@ export class CartComponent implements OnInit {
   apiUrlAddress: string = `http://127.0.0.1:5000/address`;
   selectedAddressId: string | null = null;
   errorMessage: string | null = null;
+  alertMessage: string | null = null;
   userWalletBalance: number = 0;
   isModalOpen: boolean = false;
   userId: string | null = '';
-  quantity: number = 1;
   addresses: any[] = [];
   cartItems: any[] = [];
-  alertMessage: string | null = null;
-
-
+  quantity: number = 1;
 
   constructor(
     private http: HttpClient,
@@ -74,7 +73,6 @@ export class CartComponent implements OnInit {
   updateCartItemQuantity(cartItem: any): void {
     this.cartService.updateCartItemQuantity(cartItem.cart_item_id, cartItem.quantity).subscribe(
       response => {
-        console.log('Quantity updated successfully:', response);
         this.getCartItems();
       },
       error => {
@@ -87,30 +85,107 @@ export class CartComponent implements OnInit {
     if (this.selectedAddressId) {
       this.orderService.placeOrder(this.selectedAddressId).subscribe(
         response => {
-          this.getCartItems();
-          this.getUserWalletBalance();
-          alert('Order placed successfully!');
-          console.log(response.message)
-          this.router.navigate(['/orders']);
+          // 1. Success SweetAlert
+          this.getCartItems(); // Refresh cart items
+          this.getUserWalletBalance(); // Refresh user's wallet balance
+  
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: response.message,
+            showCloseButton: true,
+            confirmButtonColor: "#5cabff",
+            confirmButtonText: 'Check your orders',
+          }).then(result => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/orders']);
+            }
+          });
         },
         error => {
           const errorMessage = error.error?.message || 'Error placing order. Please try again later.';
-          alert(errorMessage);
+          // Check the error message or error code to determine the type of issue
+  
+          if (errorMessage.includes('Address')) {
+            // 2. Address Error SweetAlert
+            Swal.fire({
+              icon: 'warning',
+              title: 'Address Error',
+              text: errorMessage,
+              confirmButtonColor: "#5cabff",
+              confirmButtonText: 'Add Address',
+              showCancelButton: true,
+              showCloseButton: true,
+            }).then(result => {
+              if (result.isConfirmed) {
+                this.router.navigate(['/address']);
+              }
+            });
+          } else if (errorMessage.includes('Insufficient wallet balance')) {
+            // 3. Insufficient Balance SweetAlert
+            Swal.fire({
+              icon: 'error',
+              title: 'Insufficient Balance',
+              text: errorMessage,
+              confirmButtonColor: "#5cabff",
+              confirmButtonText: 'Go to Wallet',
+              showCloseButton: true,
+            }).then(result => {
+              if (result.isConfirmed) {
+                this.router.navigate(['/wallet']);
+              }
+            });
+          } else if (errorMessage.includes('stock')) {
+            // 4. Stock Issue SweetAlert
+            Swal.fire({
+              icon: 'error',
+              title: 'Stock Issue',
+              text: errorMessage,
+              confirmButtonColor: "#5cabff",
+              confirmButtonText: 'Okay',
+              showCloseButton: true,
+            })
+          } 
+          else {
+            // Generic Error SweetAlert
+            Swal.fire({
+              title: 'Order Failed',
+              text: errorMessage,
+              icon: 'error',
+              confirmButtonColor: "#5cabff",
+              confirmButtonText: 'Okay',
+              showCloseButton: true,
+            });
+          }
+  
           console.error('Error placing order:', errorMessage);
         }
       );
     } else {
-      alert('Please select an address to place your order.');
+      // 2. Address Not Selected SweetAlert
+      Swal.fire({
+        icon: 'warning',
+        title: 'Address Required',
+        text: 'Please select an address to place your order.',
+        confirmButtonColor: "#5cabff",
+        confirmButtonText: 'Add Address',
+        showCancelButton: true,
+        showCloseButton: true,
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/address']);
+        }
+      });
     }
     this.closeModal();
-  }
-
+  }  
+  
   fetchAddresses(): void {
     const headers = this.getHeaders();
-
     this.http.get<any[]>(`${this.apiUrlAddress}?user_id=${this.userId}`, {headers}).subscribe(
       (response) => {
         this.addresses = response;
+        console.log(this.addresses.length + ' address')
         if (this.addresses.length > 0) {
           this.selectedAddressId = this.addresses[0].address_id;
         }

@@ -13,7 +13,7 @@ export class WishlistComponent implements OnInit {
   wishlistId: string | null = null;
   userId: string | null = localStorage.getItem('userId');
   errorMessage: string = '';
-  alertMessage: string = '';  
+  alertMessage: string | null = null;  
   quantity: number = 1;
 
   constructor(
@@ -52,23 +52,27 @@ export class WishlistComponent implements OnInit {
       bookId: book.book_id,
       quantity: this.quantity
     };
+    this.alertMessage = null;
+
 
     this.cartService.addCartItem(cartItem).subscribe(
-      response => {
-        this.alertMessage = `${book.title} has been added to your cart successfully!`;
-        console.log('Book added to cart successfully:', response);
+      (response) => {
+        this.alertMessage = response.message;
+        console.log('Item added to cart:', response);
       },
-      error => {
-        this.errorMessage = 'Error adding book to cart.';
-        console.error(this.errorMessage, error);
+      (error) => {
+        console.error('Error adding item to cart:', error);
       }
     );
   }
 
   removeFromWishlist(bookId: string): void {
+    this.alertMessage = null;
+
     this.wishlistService.removeFromWishlist(bookId).subscribe(
       response => {
-        console.log('Book removed from wishlist:', response.message);
+        this.alertMessage = response.message;
+        console.log('Book removed from wishlist:');
         this.wishlistItems = this.wishlistItems.filter(item => item.book_id !== bookId);
       },
       error => {

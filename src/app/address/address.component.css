@@ -223,12 +223,12 @@ h2{
     text-align: center;
     padding: 20px 0px;
 }
-
+/* 
 .close-modal{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
+} */
 
 .btn-close {
     font-size: 15px;

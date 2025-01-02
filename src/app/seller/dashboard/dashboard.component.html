@@ -26,7 +26,7 @@
             <i class="uil uil-clock-three"></i>
             <span class="text">Books</span>
           </div>
-            <button class="btn btn-secondary addbook-button" (click)="openAddBookModal()"><i class="uil uil-plus-circle"></i> Add Book </button>
+            <button class="btn addbook-button" (click)="openAddBookModal()"><i class="uil uil-plus-circle"></i> Add Book </button>
         </div>
         
         <div class="activity-data" class="table-wrapper">
@@ -41,7 +41,7 @@
                 <th>Published</th>
                 <th>Price</th>
                 <th>Stock</th>
-                <th>Description</th>
+                <!-- <th>Description</th> -->
                 <th></th>
                 <th></th>
               </tr>
@@ -56,7 +56,7 @@
                 <td >{{ book.published_date }}</td>
                 <td >{{book.price}}</td>
                 <td >{{book.stock}}</td>
-                <td><div class="scrollable-description">{{book.description}}</div></td>
+                <!-- <td><div class="scrollable-description">{{book.description}}</div></td> -->
                 <td class="book-button" (click)="openUpdateBookModal(book.title)"><i class="uil uil-pen icon"></i></td>
                 <td class="book-button" (click)="openDeleteBookModal(book.book_id, book.title)"><i class="uil uil-trash icon"></i></td>
               </tr>

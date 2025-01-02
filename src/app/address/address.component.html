@@ -40,9 +40,12 @@
         <div *ngIf="isAddModal" class="modal">
             <div class="modal-content">
                 <div class="close-modal">
+                    <div class="text-right">
+                        <button type="button" class="btn-close" (click)="closeAddModal()"></button>
+                    </div>
                     <h4>Add New Address</h4>
-                    <button type="button" class="btn-close" (click)="closeAddModal()"></button>
-                  </div>                <form (ngSubmit)="addAddress()">
+                  </div>                
+                  <form (ngSubmit)="addAddress()">
                     <input type="text" placeholder="Enter Recipient Name" id="recipient_name" [(ngModel)]="newAddress.recipient_name" name="recipient_name" required>
                     <textarea type="text" placeholder="Enter the Address" id="address" [(ngModel)]="newAddress.address" name="address" required></textarea>
                     <div class="form-group">
@@ -73,8 +76,10 @@
         <div *ngIf="isEditModal" class="modal">
             <div class="modal-content">
                 <div class="close-modal">
+                    <div class="text-right">
+                        <button type="button" class="btn-close" (click)="closeEditModal()"></button>
+                    </div>
                     <h4>Edit Address</h4>
-                    <button type="button" class="btn-close" (click)="closeEditModal()"></button>
                 </div>
                 <form (ngSubmit)="updateAddress()">
                     <input type="text" placeholder="Enter Recipient Name" id="recipient_name" [(ngModel)]="editAddressData.recipient_name" name="recipient_name" required>
@@ -105,9 +110,14 @@
         <div *ngIf="isDeleteModal" class="modal">
             <div class="modal-content deletemodal">
                 <div class="close-modal">
-                    <h4>Are you sure you want to delete this address?</h4>
-                    <button type="button" class="btn-close" (click)="closeModal()"></button>
-                </div>                <div class="modal-buttons">
+                    <div class="text-right">
+                        <button type="button" class="btn-close" (click)="closeModal()"></button>
+                    </div>
+                    <div class="text-center">
+                        <h4>Are you sure you want to delete this address?</h4>
+                    </div>
+                </div>                
+                <div class="modal-buttons">
                     <button class="modal-button red" (click)="deleteAddress()">Yes</button>
                     <button class="modal-button remove" (click)="closeModal()">No</button>
                 </div>

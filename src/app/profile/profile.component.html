@@ -81,7 +81,7 @@
           <!-- Current Password -->
           <div class="form-group">
             <label for="currentPassword">Current Password:</label>
-            <input type="password" id="currentPassword" name="currentPassword" [(ngModel)]="currentPassword" required #currentPasswordInput="ngModel">
+            <input type="password" id="currentPassword" placeholder="Enter current password" name="currentPassword" [(ngModel)]="currentPassword" required #currentPasswordInput="ngModel">
             <div *ngIf="currentPasswordInput.invalid && currentPasswordInput.touched" class="error-message">
               <span *ngIf="currentPasswordInput.errors?.['required']">Current password is required.</span>
             </div>
@@ -90,7 +90,7 @@
           <!-- New Password -->
           <div class="form-group">
             <label for="newPassword">New Password:</label>
-            <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required minlength="8" #newPasswordInput="ngModel">
+            <input type="password" id="newPassword" placeholder="Enter new password" name="newPassword" [(ngModel)]="newPassword" required minlength="8" #newPasswordInput="ngModel">
             <div *ngIf="newPasswordInput.invalid && newPasswordInput.touched" class="error-message">
               <span *ngIf="newPasswordInput.errors?.['required']">New password is required.</span>
               <span *ngIf="newPasswordInput.errors?.['minlength']">New password must be at least 8 characters long.</span>
@@ -100,7 +100,7 @@
           <!-- Confirm Password -->
           <div class="form-group">
             <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required [pattern]="newPassword" #confirmPasswordInput="ngModel">
+            <input type="password" id="confirmPassword" placeholder="Enter confirm password" name="confirmPassword" [(ngModel)]="confirmPassword" required [pattern]="newPassword" #confirmPasswordInput="ngModel">
             <div *ngIf="confirmPasswordInput.invalid && confirmPasswordInput.touched" class="error-message">
               <span *ngIf="confirmPasswordInput.errors?.['required']">Please confirm your new password.</span>
               <span *ngIf="confirmPasswordInput.errors?.['pattern']">Passwords do not match.</span>

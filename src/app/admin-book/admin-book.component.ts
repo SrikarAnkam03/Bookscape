@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
 import { BookservicesService } from '../services/bookservices.service';
+import Swal from 'sweetalert2';
 
 interface Book {
   book_id: number;
@@ -59,8 +60,36 @@ export class AdminBookComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    Swal.fire({
+      title: 'Are you sure you want to log out?',
+      showCancelButton: true,
+      confirmButtonColor: '#004d88',
+      cancelButtonColor: '#888',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      customClass: {
+        popup: 'custom-swal-wide'
+      },
+      didOpen: () => {
+        const popup = document.querySelector('.swal2-popup') as HTMLElement;
+        const ButtonYes = document.querySelector('.swal2-confirm') as HTMLElement;
+        const ButtonNo = document.querySelector('.swal2-cancel') as HTMLElement;
+        if (ButtonYes) {
+          ButtonYes.style.width = '100px';
+        }
+        if (ButtonNo) {
+          ButtonNo.style.width = '100px';
+        }
+        if (popup) {
+          popup.style.width = '380px';
+          popup.style.height = '150px';
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    });
   }
 }

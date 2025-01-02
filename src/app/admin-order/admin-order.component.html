@@ -3,7 +3,7 @@
       <a routerLink="/admin"><label class="logo"><img class="logo-icon" src="../assets/images/booklogo_3.png" alt="Logo"/></label></a> 
     </div>
     <div class="logout">
-      <a routerLink="/login" class="logout-text">Logout</a>
+      <a class="logout-text" (click)="logout()">Logout</a>
     </div>
 </div>
   
@@ -56,9 +56,8 @@
                     <h2>by {{ item.author_name }}</h2>
                     </div>
                     <div class="price-section">
-                    
-                    <p>Quantity: {{ item.quantity }}</p>
-                    <h4>Price: <span>{{ item.price * item.quantity | currency: 'INR' }}</span></h4>
+                      <p>Quantity&nbsp; :&nbsp;&nbsp;&nbsp;{{ item.quantity }}</p>
+                      <h4>Price&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span class="ms-1">{{ item.price * item.quantity | currency: 'INR' }}</span></h4>
                     </div>
                 </div>
                 <div class="img-box">

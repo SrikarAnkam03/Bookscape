@@ -23,14 +23,12 @@
                 <h1>{{item.title}}</h1>
                 <h2>{{item.author_name}}</h2>
               </div>
-      
               <!-- Stock Information -->
               <div class="stock-info">
                 <span *ngIf="item.stock > 0 && item.stock < item.quantity" class="stock-warning">
                   Only {{ item.stock }} left in stock
                 </span>
               </div>
-      
               <div style="width: 100%;">
                 <!-- Quantity Selector -->
                 <div class="counter-container">
@@ -41,7 +39,6 @@
                     <button class="counter-btn" (click)="increaseQuantity(item)" [disabled]="item.quantity >= item.stock || item.stock === 0"> + </button>
                   </div>
                 </div>
-      
                 <!-- Price Information -->
                 <h3 class="price" (click)="viewBookDetails(item.title)">
                   Price : <span>{{ item.price | currency:'INR' }}</span>
@@ -49,20 +46,18 @@
               </div>
             </div>
           </div>
-      
           <!-- Trash Button for Removing Item -->
           <span class="trash" (click)="removeFromCart(item.cart_item_id)">
             <i class="fa-solid fa-trash"></i>
           </span>
         </div>
       </div>
-      
     </div>
     <div class="total-price">
       <h3 class="amount">Total Amount: <span>{{ getTotalPrice() | currency:'INR'}}</span></h3>   
     </div>
     <div class="buttons">
-      <button class="btn btn-primary" (click)="proceedToCheckout()" (click)="proceedToCheckout()" [disabled]="hasUnavailableItems()"> Proceed to Checkout </button>    
+      <button class="btn btn-primary" (click)="proceedToCheckout()"[disabled]="hasUnavailableItems()"> Proceed to Checkout </button>    
     </div>
   </div>
 
@@ -116,7 +111,7 @@
     <div class="address">
       <p>Select your Delivery Address :</p>
       <select class="dropdown" aria-label="Select address" [(ngModel)]="selectedAddressId" (change)="checkForNewAddress()">
-        <option *ngIf="addresses.length === 0" selected disabled>No Addresses Available</option>
+        <option *ngIf="addresses.length == undefined" selected disabled>No Address Available</option>
         <option *ngFor="let address of addresses" [value]="address.address_id">{{ address.recipient_name }} - {{ address.address_type }}</option>
         <option value="new">Add New Address</option>
       </select>

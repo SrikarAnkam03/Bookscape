@@ -63,11 +63,12 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
+  font-weight: 600;
 }
 
 .edit-btn:hover {
-  background: #5282b9;
   color: #fff;
+  background: #5282b9;  
 }
 
 .wallet-info strong {
@@ -98,6 +99,7 @@
 
 .responsive-table th {
   background-color: #8dc1fc;
+  font-size: 12px;
   position: sticky; 
   top: 0;
   z-index: 10;
@@ -133,11 +135,13 @@
 }
 
 .title-close{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   width: 100%;
   margin-bottom: 20px;
+}
+
+.btn-close{
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .input{
@@ -188,7 +192,7 @@
   margin: 0 10px;
   padding: 5px 10px;
   border-radius: 4px;
-  background-color: #8dc1fc;
+  background-color: #5282b9;
 }
 
 .pagination-controls button:disabled {

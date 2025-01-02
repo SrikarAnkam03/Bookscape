@@ -21,8 +21,16 @@
 }
 
 .addbook-button{
+    background-color: #81e9d4;
+    font-weight: 500;
+    font-size: 13px;
     padding: 10px;
     width: 120px;
+}
+
+.addbook-button:hover{
+    background-color: #1ABC9C;
+    color: #fff
 }
 
 .dash-content .title{
@@ -35,7 +43,7 @@
     position: relative;
     height: 45px;
     width: 45px;
-    background-color: #bdbdbdab;
+    background-color: #81e9d454;
     border-radius: 6px;
     display: flex;
     align-items: center;
@@ -59,7 +67,7 @@
     align-items: center;
     border-radius: 10px;
     padding: 15px 20px;
-    background-color: #bdbdbd8c;
+    background-color: #81e9d454;
     width: 100%;
 }
 .boxes .box i{
@@ -175,8 +183,8 @@ textarea{
 
 select{
     border-radius: 5px;
-    border: 1px solid #ddd;
-    background-color: #d6d6d6;
+    border: 1px solid #81e9d454;
+    background-color: #81e9d454;
     color: #333;
     margin-bottom: 10px;
     padding: 10px;
@@ -184,7 +192,8 @@ select{
 }
 
 .modal-content h2{
-    color: #646464d2;
+    color: #178d75;
+    font-weight: 500;
     text-align: center;
     padding-bottom: 10px;
 }
@@ -193,8 +202,8 @@ select{
     padding: 10px 20px;
     margin-top: 10px;
     border-radius: 5px;
-    color: #333;
-    background: #bdbdbd;
+    color: #fff;
+    background: #1ABC9C;
     border: none;
     width: 100px;
 }
@@ -257,23 +266,17 @@ select{
     border-bottom: 1px solid #ddd;
 }
 
-.scrollable-description {
-    max-height: 80px;  
-    overflow-y: auto;   
-    padding: 5px;      
-}
-
 .responsive-table th {
-    background-color: #3a3a3a;
-    color: #ddd;
+    background-color: #1ABC9C;
+    color: #fff;
     position: sticky; 
     top: 0;
     z-index: 10;
 }
 
 .responsive-table tr:hover{
-    background-color: #3b3b3bc9;
-    color: #fff;
+    background-color: #81e9d454;
+    color: #333;
 }
 
 .icon{

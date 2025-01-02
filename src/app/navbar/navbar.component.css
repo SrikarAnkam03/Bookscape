@@ -72,7 +72,6 @@
   opacity: 1;
 }
 
-
 .logo-container.active .logo-active {
   opacity: 1;
 }
@@ -183,6 +182,10 @@
   }
 }
 
+.logout{
+  cursor: pointer;
+}
+
 
 .nav-links a.active {
   font-weight: bold;
@@ -260,6 +263,22 @@ i{
 
 #check {
   display: none;
+}
+
+/* Target confirm button */
+.swal2-confirm {
+  width: 150px; /* Adjust button width */
+  height: 50px; /* Adjust button height */
+  font-size: 16px; /* Adjust font size */
+  border-radius: 5px; /* Optional rounded corners */
+}
+
+/* Target cancel button */
+.swal2-cancel {
+  width: 150px; /* Adjust button width */
+  height: 50px; /* Adjust button height */
+  font-size: 16px; /* Adjust font size */
+  border-radius: 5px; /* Optional rounded corners */
 }
 
 

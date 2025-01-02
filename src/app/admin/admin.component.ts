@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { BookservicesService } from '../services/bookservices.service';
 import { OrderService } from '../services/order.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin',
@@ -45,15 +46,15 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkAuthAndFetchData();
+      this.fetchData('orders');
   }
 
   checkAuthAndFetchData(): void {
     const authToken = localStorage.getItem('access_token');
     if (authToken) {
       this.fetchData('sellers');
-      this.fetchData('books');
       this.fetchData('users');
-      this.fetchData('orders');
+      this.fetchData('books');
     } else {
       this.router.navigate(['/login']);
     }
@@ -92,7 +93,7 @@ export class AdminComponent implements OnInit {
         break;
       case 'books':
         this.bookService.getBooks().subscribe(data => {
-          this.books = data.data;
+          this.books = data;
           this.totalItems = this.books.length;
           this.sortData(this.books);
           this.showUserHeaders = false;
@@ -264,9 +265,38 @@ export class AdminComponent implements OnInit {
     seller.hoverColor = seller.approve ? '#5dee89' : '#dddddd';
   }
 
+
   logout(): void {
-    localStorage.removeItem('access_token');
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    Swal.fire({
+      title: 'Are you sure you want to log out?',
+      showCancelButton: true,
+      confirmButtonColor: '#004d88',
+      cancelButtonColor: '#888',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      customClass: {
+        popup: 'custom-swal-wide'
+      },
+      didOpen: () => {
+        const popup = document.querySelector('.swal2-popup') as HTMLElement;
+        const ButtonYes = document.querySelector('.swal2-confirm') as HTMLElement;
+        const ButtonNo = document.querySelector('.swal2-cancel') as HTMLElement;
+        if (ButtonYes) {
+          ButtonYes.style.width = '100px';
+        }
+        if (ButtonNo) {
+          ButtonNo.style.width = '100px';
+        }
+        if (popup) {
+          popup.style.width = '380px';
+          popup.style.height = '150px';
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    });
   }
 }

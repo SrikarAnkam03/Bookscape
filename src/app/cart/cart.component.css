@@ -175,6 +175,7 @@ span{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    background-color: #fff;
 }
 
 .btn {
@@ -191,7 +192,7 @@ span{
 }
 
 .empty-cart{
-    height: 70vh;
+    height: 60vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -280,11 +281,11 @@ span{
   .dropdown{
     width: 100%;
     border: none;
-    color: #fff;
+    color: #222;
     font-weight: 500;
     padding: 10px 10px;
     border-radius: 5px;
-    background-color: #81c8dd;
+    background-color: #95e6ff;
   }
 
   .checkout{
@@ -303,33 +304,39 @@ span{
 
   .address{
     padding: 10px;
+    p{
+        font-size: 15px;
+    }
   }
   
   .modal-btn{
     border-radius: 5px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     width: 50%;
     margin: 10px;
     padding: 5px;
   }
+
   .yes{
-    border: 2px solid #0c970c;
-    background-color: #5c5c5c00;
-    color: #0c970c;
+    border: 2px solid #67ff67;
+    background-color: #67ff67;
+    color: #333;
   }
   .no{
-    border: 2px solid #707070;
-    background-color: #14638800;
-    color: #707070;
+    border: 2px solid #969696;
+    background-color: #969696;
+    color: #fff;
   }
+
   .yes:hover{
-    border: 2px solid #02b102;
-    background-color: #02b102;
+    border: 2px solid #12c712;
+    background-color: #12c712;
     color: #fff;
   }
   .no:hover{
-    background-color: #707070;
+    border: 2px solid #444444;
+    background-color: #444444;
     color: #fff;
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';  
+import { UserService } from '../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -63,15 +64,21 @@ export class ProfileComponent implements OnInit {
     };
 
     console.log('Sending update request with:', updatedProfile); 
-
     this.userService.updateUserProfile(updatedProfile).subscribe(
-      response => {
+      (response) => {
         console.log('Profile updated successfully', response);
+        Swal.fire({
+          title: response.message,
+          icon: 'success',
+          confirmButtonColor: '#3399c9',
+          confirmButtonText: 'Okay',
+          showCloseButton: true
+        });        
         this.closeEditModal();
-        this.fetchUser();  
       },
-      error => {
+      (error) => {
         console.error('Error updating profile', error);
+        Swal.fire('Error', error.error.message || 'Failed to update profile. Please try again.', 'error');
       }
     );
   }

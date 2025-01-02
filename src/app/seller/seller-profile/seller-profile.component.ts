@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-seller-profile',
@@ -20,7 +20,6 @@ export class SellerProfileComponent implements OnInit {
   showModal: boolean = false;
   changePasswordModal: boolean = false;
 
- 
   constructor(private userService: UserService) {}  
 
   ngOnInit(): void {
@@ -34,7 +33,6 @@ export class SellerProfileComponent implements OnInit {
 
   fetchUser(): void {
     console.log("Fetching user data for:", this.email);
-  
     this.userService.getUserDetails().subscribe(
       (response: any) => {
         console.log("User data received:", response);
@@ -44,6 +42,7 @@ export class SellerProfileComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching user details:', error);
+        Swal.fire('Error', 'Failed to fetch user details. Please try again.', 'error');
       }
     );
   }
@@ -66,12 +65,20 @@ export class SellerProfileComponent implements OnInit {
     };
     
     this.userService.updateUserProfile(updatedProfile).subscribe(
-      response => {
+      (response) => {
         console.log('Profile updated successfully', response);
+        Swal.fire({
+          title: response.message,
+          icon: 'success',
+          confirmButtonColor: '#2C3E50',
+          confirmButtonText: 'Okay',
+          showCloseButton: true
+        });        
         this.closeEditModal();
       },
-      error => {
+      (error) => {
         console.error('Error updating profile', error);
+        Swal.fire('Error', error.error.message || 'Failed to update profile. Please try again.', 'error');
       }
     );
   }
@@ -86,7 +93,7 @@ export class SellerProfileComponent implements OnInit {
 
   onChangePasswordSubmit() {
     if (this.newPassword !== this.confirmPassword) {
-      console.error('New password and confirmation do not match');
+      Swal.fire('Error', 'New password and confirmation do not match!', 'error');
       return;
     }
   
@@ -95,17 +102,23 @@ export class SellerProfileComponent implements OnInit {
       new_password: this.newPassword,
       email: this.email
     };
-    console.log("🚀 ~ SellerProfileComponent ~ onChangePasswordSubmit ~ passwordChangeRequest.current_password:", passwordChangeRequest.current_password)
-  
     console.log('Sending password change request:', passwordChangeRequest);
   
     this.userService.changePassword(passwordChangeRequest).subscribe(
       (response) => {
         console.log('Password changed successfully:', response);
+        Swal.fire({
+          title: response.message,
+          icon: 'success',
+          confirmButtonColor: '#2C3E50',
+          confirmButtonText: 'Okay',
+          showCloseButton: true
+        });
         this.closeChangePasswordModal();
       },
       (error) => {
         console.error('Error changing password:', error);
+        Swal.fire('Error', error.error.message || 'Failed to change password. Please try again.', 'error');
       }
     );
   }

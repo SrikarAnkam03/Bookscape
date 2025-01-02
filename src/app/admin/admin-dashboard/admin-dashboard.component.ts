@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { BookservicesService } from '../services/bookservices.service';
+import { UserService } from 'src/app/services/user.service';
+import { BookservicesService } from 'src/app/services/bookservices.service';
 
 @Component({
   selector: 'app-admin-dashboard',
